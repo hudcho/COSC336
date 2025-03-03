@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Assignmnet3_T2_Fixed {
+public class Assignmnet3_T2 {
     public static int rowF = 0;
     public static int colF = 0;
 
