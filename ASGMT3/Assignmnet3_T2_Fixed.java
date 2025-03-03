@@ -31,7 +31,7 @@ public class Assignmnet3_T2_Fixed {
 
         int minInc[][] = new int[x.length][x[0].length];
 
-        // Fill edge row col with right or down only movements//
+        // Fill edge row with right only movements//
         minInc[0][0] = x[0][0];
         for (int i = 1; i < x[0].length; i++) {// Case only right moves: Top//
             int rightMoves = minInc[0][i - 1] + x[0][i];
