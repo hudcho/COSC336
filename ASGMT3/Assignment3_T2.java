@@ -11,18 +11,18 @@ public class Assignment3_T2 {
         rowF = 2;
         colF = 1;
         print(temp, temp.length, temp[0].length);
-        System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
+        System.out.println("\nOptimize path (0, 0) to (" + rowF + ", " + colF + ")\n");
         System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(temp)+"\n");
         
         
         int[][] x = fileInts();
         print(x, x.length, x[0].length);
-        System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
+        System.out.println("\nOptimize path (0, 0) to (" + rowF + ", " + colF + ")\n");
         System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x)+"\n");
 
         x = fileInts();
         print(x, x.length, x[0].length);
-        System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
+        System.out.println("\nOptimize path (0, 0) to (" + rowF + ", " + colF + ")\n");
         System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x)+"\n");
 
     }
