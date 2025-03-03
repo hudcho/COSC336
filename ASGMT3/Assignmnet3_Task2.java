@@ -14,6 +14,45 @@ public class Assignmnet3_Task2 {
 
         System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")");
 
+        System.out.println("Min cost is "+costOpti(x));
+
+    }
+
+    public static int costOpti(int[][] x) {
+
+        int minInc[][] = new int[x.length][x[0].length];
+
+        // Fill edge row col with right or down only movements//
+        minInc[0][0] = x[0][0];
+        for (int i = 1; i < x[0].length; i++) {
+            minInc[0][i] = minInc[0][i - 1] + x[0][i];
+        }
+        for (int i = 1; i < x.length; i++) {
+            minInc[i][0] = minInc[i - 1][0] + x[i][0];
+        }
+
+        //Fill out rest of matrix//
+        for (int i = 1; i <= rowF; i++) {
+            for (int j = 1; j <= colF; j++) {
+
+                int up = (minInc[i - 1][j]);
+                int left = (minInc[i][j - 1]);
+                int diag = (minInc[i - 1][j - 1]);
+                
+                minInc[i][j] = x[i][j] + Math.min(up, Math.min(left, diag));
+
+                //TBD might use to track path of opti route ?//
+                if(up < left && up < diag){}
+                else if(left < up && left < diag){}
+                else if(diag < left && diag < up ){}
+                //TBD might use to track path of opti route ?//
+
+            }
+        }
+
+        print(minInc, rowF, colF);
+    
+        return minInc[rowF][colF];
     }
 
     // Done : builds array from file correctly//
