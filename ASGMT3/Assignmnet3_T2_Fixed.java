@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Assignmnet3_T2_Fixed {
@@ -8,12 +7,22 @@ public class Assignmnet3_T2_Fixed {
     public static int colF = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[][] x = fileInts();
-
-        print(x, x.length, x[0].length);
-
+        int[][] temp = new int[][]{ {1, 2, 3}, {4, 8, 1}, {1, 5, 3}};
+        rowF = 2;
+        colF = 1;
+        print(temp, temp.length, temp[0].length);
         System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
+        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(temp)+"\n");
+        
+        
+        int[][] x = fileInts();
+        print(x, x.length, x[0].length);
+        System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
+        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x));
 
+        x = fileInts();
+        print(x, x.length, x[0].length);
+        System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
         System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x));
 
     }
@@ -33,7 +42,7 @@ public class Assignmnet3_T2_Fixed {
         // Moves to choosen: cell0:(2), cell1:(4), cell2:(4), cell3:(4), ..., Last
         // index:(3)
 
-        for (int k = 1; k < x.length; k++) {// all rows//
+        for (int k = 1; k < x.length; k++) {// all other rows//
 
             for (int j = 0; j < x[k].length; j++) {// in line//
 
@@ -112,23 +121,6 @@ public class Assignmnet3_T2_Fixed {
             System.out.println("Error File Not Found...");
             return null;
         }
-    }
-
-    // RandomFill for completeness//
-    public static int[][] fillInts(int sizeRow, int sizeCol, int min, int max) {
-        Random randi = new Random();
-        int[][] y = new int[sizeRow][sizeCol];
-
-        int i;
-        int j;
-
-        for (i = 0; i < y.length; i++) {
-            for (j = 0; j < y[0].length; j++) {
-                y[i][j] = randi.nextInt(min, max + 1);
-            }
-        }
-
-        return y;
     }
 
     // Print 2D int array//
