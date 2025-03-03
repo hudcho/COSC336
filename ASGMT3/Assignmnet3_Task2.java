@@ -83,7 +83,7 @@ public class Assignmnet3_Task2 {
                 for (m = 0; m < x[0].length; m++) {
                     if (scnrX.hasNextInt()) {
                         x[n][m] = scnrX.nextInt();
-                    } else {// Out Of Room//
+                    } else {//no more data//
                         n = x.length;
                         m = x[0].length;
                     }
