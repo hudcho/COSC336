@@ -18,12 +18,12 @@ public class Assignmnet3_T2_Fixed {
         int[][] x = fileInts();
         print(x, x.length, x[0].length);
         System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
-        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x));
+        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x)+"\n");
 
         x = fileInts();
         print(x, x.length, x[0].length);
         System.out.println("\nOptomize path (0, 0) to (" + rowF + ", " + colF + ")\n");
-        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x));
+        System.out.println("\nMin cost to cell  (" + rowF + ", " + colF + ") : " + costOpti(x)+"\n");
 
     }
 
@@ -148,3 +148,72 @@ public class Assignmnet3_T2_Fixed {
 
     }
 }
+/* 'Assignmnet3_T2_Fixed' 
+
+Integer Matrix Size : [3][3]
+[ 1, 2, 3 ]
+[ 4, 8, 1 ]
+[ 1, 5, 3 ]
+
+Optomize path (0, 0) to (2, 1)
+
+Min cost path summations processed...
+Integer Matrix Size : [3][3]
+[ 1, 3, 6 ]
+[ 5, 9, 4 ]
+[ 6, 9, 7 ]
+
+Min cost to cell  (2, 1) : 9
+
+Input File Name : input-3.6.txt
+
+Integer Matrix Size : [6][6]
+[ 3, 1, 1, 1, 1, 1 ]
+[ 1, 4, 2, 3, 5, 1 ]
+[ 9, 1, 2, 3, 4, 5 ]
+[ 1, 7, 2, 5, 4, 4 ]
+[ 1, 1, 1, 1, 1, 1 ]
+[ 1, 7, 1, 7, 1, 7 ]
+
+Optomize path (0, 0) to (5, 5)
+
+Min cost path summations processed...
+Integer Matrix Size : [6][6]
+[ 3, 4, 5, 6, 7, 8 ]
+[ 4, 7, 6, 8, 11, 8 ]
+[ 13, 5, 7, 9, 12, 13 ]
+[ 6, 12, 7, 12, 13, 16 ]
+[ 7, 7, 8, 8, 9, 10 ]
+[ 8, 14, 8, 15, 9, 16 ]
+
+Min cost to cell  (5, 5) : 16
+
+Input File Name : input-3.7.txt
+
+Integer Matrix Size : [8][5]
+[ 1, 2, 3, 4, 5 ]
+[ 5, 4, 3, 2, 1 ]
+[ 1, 2, 3, 4, 5 ]
+[ 5, 4, 3, 2, 1 ]
+[ 1, 2, 3, 4, 5 ]
+[ 5, 4, 3, 2, 1 ]
+[ 1, 2, 3, 4, 5 ]
+[ 5, 4, 3, 2, 1 ]
+
+Optomize path (0, 0) to (7, 4)
+
+Min cost path summations processed...
+Integer Matrix Size : [8][5]
+[ 1, 3, 6, 10, 15 ]
+[ 6, 5, 6, 8, 9 ]
+[ 6, 7, 8, 10, 13 ]
+[ 11, 10, 10, 10, 11 ]
+[ 11, 12, 13, 14, 15 ]
+[ 16, 15, 15, 15, 15 ]
+[ 16, 17, 18, 19, 20 ]
+[ 21, 20, 20, 20, 20 ]
+
+Min cost to cell  (7, 4) : 20
+
+PS C:\Users\Rwils\Desktop\Algorithms> 
+ */
