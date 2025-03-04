@@ -2,69 +2,67 @@ import java.util.Arrays;
 
 public class Asgmnt3Task1 {
     public static void main(String[] args) {
-        int[] A = {7, 3, 8, 1, 5};
+        int[] arr = {7, 3, 8, 1, 5};
 
-        System.out.println(countUpPairs(A));
+        System.out.println(countUpPairs(arr));
+        System.out.println(Arrays.toString(arr));
     }
 
     public static int countUpPairs(int[] A) {
-        return splitArray(A, 0, A.length - 1);
+        return divideAndCount(A, 0, A.length - 1);
     }
 
-    public static int splitArray(int[] A, int p, int r) {
+    public static int divideAndCount(int[] A, int p, int r) {
         if (p >= r)
             return 0;
 
-        int count = 0;
         int q = p + ((r - p) / 2);
-
-        count += splitArray(A, p, q);
-        count += splitArray(A, q + 1, r);
-
-        count += mergeAndCount(A, p, q, r);
-        return count;
-}
+        return divideAndCount(A, p, q) + divideAndCount(A, q + 1, r) + mergeAndCount(A, p, q, r);
+    }
 
     public static int mergeAndCount(int[] A, int p, int q, int r) {
-        int nL = q - p + 1; //gets length of Left subarray
-        int nR = r - q; //gets length of right subarray
+        int nL = q - p + 1;
+        int nR = r - q;
 
         int[] L = new int[nL];
         int[] R = new int[nR];
 
-        for (int i = 0; i < nL; i++) { //copies A[p, q] into L
+        //copies from A[] into L and R
+        //NOTE TO SELF: its nL/nR - 1 since nL/nR is length so max index is nL/nR - 1
+        for (int i = 0; i < nL; i++) {
             L[i] = A[p + i];
         }
         for (int j = 0; j < nR; j++) {
-            R[j] = A[q + j + 1];
+            R[j] = A[q + j + 1]; //NOTE TO SELF: q is the last index of L, so you have to add 1,
         }
 
-        int i = 0, j = 0, count = 0;
+        int i = 0, j = 0, k = p, count = 0;
 
-  
-       // System.out.println("L[] is " + Arrays.toString(L));
-        // System.out.println("R[] is " + Arrays.toString(R));
-
-        // count all elements in R that form an UP-pair with it
-        while (i < nL) {
-            // Reset j to 0 for each new element from Ldd
-            j = 0;
-            while (j < nR && L[i] >= R[j]) {
+        while (i < nL && j < nR) {
+            if (L[i] <= R[j]) {
+                A[k] = L[i];
+                count++;
+                i++;
+            }
+            else {
+                A[k] = R[j];
                 j++;
             }
-
-            // Now j points to the first element in R that is > L[i]
-            // All elements from j to nR-1 form UP-pairs with L[i]
-            if (j < nR) {
-                count += nR - j;
-            }
-
-            i++;
+            k++;
         }
 
-
+        while (i < nL) {
+            A[k] = L[i];
+            i++;
+            k++;
+        }
+        while (j < nR) {
+            A[k] = R[j];
+            j++;
+            k++;
+        }
 
         return count;
     }
-
 }
+
