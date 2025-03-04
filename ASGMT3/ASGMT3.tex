@@ -308,67 +308,163 @@ a geometric series with first term \(a=n\) and common ratio \(r=\frac{1}{2}\) th
 \end{verbatim}
 \end{itemize}
 \newpage
-\textbf{Programming Task 1.}
+\textbf{Programming Task 1.}: The input is an array $a_1, a_2, \ldots, a_n$ of numbers.  A  \emph{UP-pair} is a pair $(a_i, a_j)$  so that $1 \le i < j \le n$ and $a_i < a_j$. The task is to count the number of UP-pairs in the array. The ideal solution is to use a modified merge-sort algorithm that counts the number of UP-pairs as it merges the elements. The code first calls a wrapper method, countUpPairs(\textit{A}), which calculates the initial values of \textit{p} and \textit{r} for array \textit{A[]}. The code then recursively calls upon the divideAndCount(\textit{A, p, r}) method, first calculating the index of the midpoint \textit{q} as $p + \frac{r-p}{2}$. The method recursively calls upon the left and right half to split them until $p>=r$, or until there is only 1 element in the given segment of the array (No UP-pairs in an array with length 1 or 0). After the array has been split down to its smallest segments, divideAndCount() calls upon mergeAndCount(A, p, q, r) to count the number of UP-pairs in a given segment. It works the same as the standard merge sort algorithm the main difference here is that while merging, if $L[i] < R[j]$ count is incremented by $nR - j$ where \textit{nR} is the length of the right array segment and \textit{j} is the current index of the right array segment. This works because in a given sorted array, if $L[i] < R[j]$, in otherwords \textit{L[i]} forms a UP-pair with \textit{R[j]}, then all other elements of \textit{R[j]} also form a UP-pair with \textit{L[i]} because \textit{R[j]} is sorted and all elements of R come after the element \textit{L[i]}. This way the algorithm runs in $O(n\log n)$ time as opposed to the approach using nested loops which runs in $O(n^2)$.
 
-The input is an array $a_1, a_2, \ldots, a_n$ of numbers.  A  \emph{UP-pair} is a pair $(a_i, a_j)$  so that $1 \le i < j \le n$ and $a_i < a_j$. The task is to count the number of UP-pairs
-in the array.
+\begin{center}
+\begin{tabular}{ | m{10em} | m{30em} | } 
+  \hline
+        \textbf{Input} & \textbf{Output}\\ 
+  \hline
+        7, 3, 8, 1, 5 & 4 UP-pairs \newline [1, 3, 5, 7, 8]\\
+    \hline 
+        input-3.4.txt & 248339 UP-pairs \newline [0, 1, 3, 4, 4, 5, 8, 9, .... 984, 987, 990, 995, 999]\\
+    \hline
+        input-3.5.txt & 24787869 UP-pairs \newline [2, 3, 3, 4, 4, 6, 8, 9, .... 9996, 9997, 9998, 9999, 9999]\\
+    \hline
+\end{tabular}
+\end{center}
 
-For example, for $n = 5$ and input sequence $7, 3, 8, 1, 5$, we have the following UP-pairs: $(7,8),  (3, 8),  (3, 5),  (1,5)$.  So, there are $4$ UP-pairs. 
-Design an $O(n \log n)$ algorithm which computes the number of UP-pairs for a
-given input sequence and implement your program in Java.
+\pagebreak
+\textbf{Raw Code for Programming Task 1}
 
-It's very easy to come up with an algorithm with run time  $\Theta(n^2)$ (just compare all pairs), but such an algorithm will not get any credit.
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,  % Enables automatic line breaking
+    frame=single,     % Adds a border around the code
+    tabsize=4,        % Sets tab width
+    showstringspaces=false % Removes visible spaces in strings
+}
 
-The idea of the $O(n \log n)$  algorithm is to modify MERGE-SORT (from page 34 in the textbook)  so that in addition to sorting the array it also counts the number of UP-pairs. Thus, your modified MERGE-SORT (A, p, r) will sort the segment of the array $A[p..r]$  (like in the textbook), but in addition to that will return the number of UP-pairs in this segment.  The main modification is in the MERGE  procedure, see textbook page 31. In the final for loop, you will also count the UP-pairs in which the first component is in $L$, and the second component is in $R$. Keep in mind that $L$ and $R$ are both sorted and therefore if $L[i] < R[j]$, then all pairs $(L[i], R[j]),  (L[i], R[j+1]), \ldots, (L[i], R[r])$ are UP-pairs. So with a single comparison you can add the number of these pairs to the counter of UP-pairs. Using this observation the modified MERGE can be implemented in $O(n)$ (the same runtime as the standard MERGE).
-\medskip
+\begin{lstlisting}[language=Java]
+import java.util.*;
+import java.io.*;
 
+public class Asgmnt3Task1 {
+    public static void main(String[] args) throws FileNotFoundException  {
+        int[] arr = {7, 3, 8, 1, 5};
+        System.out.println("Data Set 1:");
+        // countUpPairs sorts the array and returns the number of UP-pairs.
+        System.out.println("UP-Pairs count: " + countUpPairs(arr));
+        System.out.println("Sorted array: " + Arrays.toString(arr));
+        System.out.println();
 
+        // Prompt the user to enter filenames for additional data sets
+        Scanner console = new Scanner(System.in);
+        System.out.println("Enter filenames (separated by spaces):");
+        String inputLine = console.nextLine().trim();
+        if (!inputLine.isEmpty()) {
+            // Split the input string into individual filenames
+            String[] filenames = inputLine.split("\\s+");
+            for (String filename : filenames) {
+                try {
+                    Scanner fileScanner = new Scanner(new File(filename));
+                    // The first integer in the file is the number of elements
+                    int n = fileScanner.nextInt();
+                    int[] fileInputArr = new int[n];
+                    // Read the next n integers from the file into the array
+                    for (int i = 0; i < n; i++) {
+                        fileInputArr[i] = fileScanner.nextInt();
+                    }
+                    fileScanner.close();
+                    // Process the array: sort it and count the UP-pairs using the modified merge sort
+                    int count = countUpPairs(fileInputArr);
+                    System.out.println("File: " + filename);
+                    System.out.println("UP-Pairs count: " + count);
+                    System.out.println("Sorted array: " + Arrays.toString(fileInputArr));
+                    System.out.println();
+                } catch (FileNotFoundException e) {
+                    System.err.println("File not found: " + filename);
+                }
+            }
+        }
+    }
 
+    /**
+     * countUpPairs:
+     * Initiates the modified merge sort that counts UP-pairs.
+     *
+     * @param A the input array of numbers.
+     * @return the total number of UP-pairs in the array.
+     */
+    public static int countUpPairs(int[] A) {
+        return divideAndCount(A, 0, A.length - 1);
+    }
 
-Test your program and report in a table the results for the following data sets.
+    /**
+     * divideAndCount:
+     * Recursively divides the array into halves, counts the UP-pairs in
+     * each half, and then counts the UP-pairs that cross the two halves during the merge.
+     *
+     * @param A the array to process.
+     * @param p the starting index.
+     * @param r the ending index.
+     * @return the number of UP-pairs in the subarray A[p..r].
+     */
+    public static int divideAndCount(int[] A, int p, int r) {
+        if (p >= r)
+            return 0;
+        int q = p + ((r - p) / 2);
+        // Recursively count UP-pairs in the left half, right half, and across the halves.
+        return divideAndCount(A, p, q)
+                + divideAndCount(A, q + 1, r)
+                + mergeAndCount(A, p, q, r);
+    }
 
-Data set 1:  7,3,8,1,5
+    /**
+     * mergeAndCount:
+     * Merges two sorted subarrays A[p...q] and A[q+1...r] while counting UP-pairs.
+     * If an element in the left subarray (L) is less than an element in the right subarray (R),
+     * then all remaining elements in R will form UP-pairs with that element from L.
+     *
+     * @param A the array containing the two subarrays.
+     * @param p the starting index of the first subarray.
+     * @param q the ending index of the first subarray.
+     * @param r the ending index of the second subarray.
+     * @return the number of UP-pairs counted during the merge.
+     */
+    public static int mergeAndCount(int[] A, int p, int q, int r) {
+        int nL = q - p + 1; // Length of left subarray
+        int nR = r - q;     // Length of right subarray
 
-Data set 2:  The  numbers from the file input-3.4, available on Blackboard. The first line of the line has the number of elements (which is 1000), and the next line has the elements.
+        int[] L = new int[nL];
+        int[] R = new int[nR];
 
-Data set 3:  The  numbers from the file input-3.5, available on Blackboard. The first line of the line has the number of elements (which is 10000), and the next line has the elements.
-
- 
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-  
-\bigskip
-
-
-NOTE 2:  You can find an example of what I mean by  ``Describe an algorithm ..." at
-
-\url{https://www.geeksforgeeks.org/find-the-element-that-appears-once-in-a-sorted-array/}
-
-%\url{https://www.geeksforgeeks.org/cut-all-the-rods-with-some-length-such-that-the-sum-of-cut-off-length-is-maximized/}
-%\medskip
-
-%See the text that starts with \textbf{Approach}.
-\newpage
+        // Copy A[p...q] into L and A[q+1...r] into R
+        for (int i = 0; i < nL; i++) {
+            L[i] = A[p + i];
+        }
+        for (int j = 0; j < nR; j++) {
+            R[j] = A[q + j + 1];
+        }
+        int i = 0, j = 0, k = p, count = 0;
+        // Merge the two sorted arrays back into A while counting UP-pairs.
+        // When L[i] < R[j], all elements after R[j] form an UP-pair with L[i].
+        while (i < nL && j < nR) {
+            if (L[i] < R[j]) {
+                count += (nR - j);  // All remaining elements in R are greater than L[i]
+                A[k++] = L[i++];
+            } else {
+                A[k++] = R[j++];
+            }
+        }
+        // Copy any remaining elements of L into A.
+        while (i < nL) {
+            A[k] = L[i];
+            i++;
+            k++;
+        }
+        // Copy any remaining elements of R into A.
+        while (j < nR) {
+            A[k] = R[j];
+            j++;
+            k++;
+        }
+        // Return the count of UP-pairs found during the merge.
+        return count;
+    }
+}
+\end{lstlisting}
+\pagebreak
 
 \textbf{Programming Task 2.}
 
