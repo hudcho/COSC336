@@ -218,25 +218,93 @@ The standard Master Theorem requires that \( f(n) \) be either polynomially smal
 
 \textbf{Exercise 2.}
 \begin{itemize}
-\item $T(n) = 2T(n-1) + 1$, $T(0)=1$.  Use the iteration method to find a $\Theta()$ evaluation for $T(n)$.
-\item $T(n) = T(n-1) + 1$,  $T(0)=1$.  Use the iteration method to find a $\Theta()$ evaluation for $T(n)$.
-\item Give a  $\Theta( \cdot)$ evaluation for the runtime of the following code:
-\begin{verbatim}
- i= n
- while(i >=1) {
-    for (j=1;  j <=n;  j++)
-        x=x+1
-    i = i/2
-}    
-\end{verbatim}
-\item Give a  $\Theta( \cdot)$ evaluation for the runtime of the following code:
-\begin{verbatim}
- i= n
- while(i >=1) {
-    for (j=1;  j <=i;  j++)
-        x=x+1
+    \item \(T(n) = 2T(n-1) + 1\), with \(T(0)=1\). Use the iteration method to find a \(\Theta()\) evaluation for \(T(n)\).
+    \item \(T(n) = T(n-1) + 1\), with \(T(0)=1\). Use the iteration method to find a \(\Theta()\) evaluation for \(T(n)\).
+    \item Give a \(\Theta(\cdot)\) evaluation for the runtime of the following code:
+    \begin{verbatim}
+i = n
+while(i >= 1) {
+    for (j = 1; j <= n; j++)
+        x = x + 1
     i = i/2
 }
+    \end{verbatim}
+    \item Give a \(\Theta(\cdot)\) evaluation for the runtime of the following code:
+    \begin{verbatim}
+i = n
+while(i >= 1) {
+    for (j = 1; j <= i; j++)
+        x = x + 1
+    i = i/2
+}
+    \end{verbatim}
+\end{itemize}
+
+\newpage
+\textbf{Answers:}
+
+\begin{enumerate}
+    \item For \(T(n) = 2T(n-1) + 1\), with \(T(0)=1\):
+    \[
+    \begin{aligned}
+    T(n) &= 2T(n-1) + 1\\[1mm]
+         &= 2\Bigl[2T(n-2) + 1\Bigr] + 1 = 2^2 T(n-2) + 2 + 1\\[1mm]
+         &= 2^3 T(n-3) + 2^2 + 2 + 1\\[1mm]
+         &\;\,\vdots\\[1mm]
+         &= 2^nT(0) + \sum_{i=0}^{n-1} 2^i\\[1mm]
+         &= 2^n + \left(2^n - 1\right)\\[1mm]
+         &= 2^{n+1} - 1.
+    \end{aligned}
+    \]
+    So, 
+    \[
+    T(n) = \Theta(2^n).
+    \]
+    
+    \item For \(T(n) = T(n-1) + 1\), with \(T(0)=1\):
+    \[
+    \begin{aligned}
+    T(n) &= T(n-1) + 1\\[1mm]
+         &= T(n-2) + 1 + 1\\[1mm]
+         &\;\,\vdots\\[1mm]
+         &= T(0) + n\\[1mm]
+         &= 1 + n.
+    \end{aligned}
+    \]
+    So, 
+    \[
+    T(n) = \Theta(n).
+    \]
+    
+    \item For the following code:
+    \begin{verbatim}
+        i = n
+        while(i >= 1) {
+            for (j = 1; j <= n; j++)
+                x = x + 1
+            i = i/2
+        }
+    \end{verbatim}
+    the outer loop runs \(\Theta(\log n)\) times (since \(i\) is halved each time) and the inner loop runs \(\Theta(n)\) times per iteration. So, the total runtime is:
+    \[
+    \Theta(n \log n).
+    \]
+    
+    \item For the following code:
+    \begin{verbatim}
+        i = n
+        while(i >= 1) {
+            for (j = 1; j <= i; j++)
+                x = x + 1
+            i = i/2
+        }
+    \end{verbatim}
+the outer loop iterates \(\Theta(\log n)\) times with \(i = \frac{n}{2^k}\) in the \(k\)th iteration, and the inner loop executes \(\Theta\left(\frac{n}{2^k}\right)\) operations. So, the total work is:
+\[
+\sum_{k=0}^{\lfloor \log_2 n \rfloor} \frac{n}{2^k} = n + \frac{n}{2} + \frac{n}{4} + \cdots,
+\]
+a geometric series with first term \(a=n\) and common ratio \(r=\frac{1}{2}\) that sums to \(\frac{n}{1-\frac{1}{2}} = 2n\), i.e., \(\Theta(n)\).
+\end{enumerate}
 \end{verbatim}
 \end{itemize}
 \newpage
