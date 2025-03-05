@@ -530,6 +530,10 @@ Data set 3:  The  numbers from the file input-3.7, available on Blackboard.
 
 \pagebreak
 
+
+\textbf{Programming Task 2.}: The input is a 2-dimensional matrix $cost[][]$ of integers with $n$ rows and $m$ columns, along with a target cell $(i,j)$. Each cell represents the cost to traverse that cell, and the total cost of a path is the sum of the costs along the path from the source cell $(0,0)$ to the target cell. The goal is to compute the minimum cost path using a dynamic programming algorithm. To achieve this, the algorithm constructs a cost matrix $minInc[][]$, where each entry $minInc[r][c]$ stores the minimum cumulative cost to reach cell $(r,c)$ from $(0,0)$. Initially, $minInc[0][0]$ is set to $cost[0][0]$, and the first row is filled by accumulating the costs from left to right, since only rightward moves are possible. For each subsequent row, the algorithm computes the minimum cost for each cell as the minimum among the cost of moving from directly above, diagonally from above-left, diagonally from above-right, and (for cells not in the first column) from the left. The final result is given by $minInc[i][j]$, which represents the minimum cost to reach the target cell. Input is provided either via a hard-coded matrix or through an input file (where the first line specifies $n$, $m$, $i$, and $j$, followed by the matrix rows). This dynamic programming approach runs in $O(nm)$ time.
+
+
 \begin{center}
 \begin{tabular}{|p{30em}|}
 \hline
