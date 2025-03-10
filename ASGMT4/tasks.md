@@ -1,6 +1,6 @@
 | Task                                                                     | Assigned to |
 |--------------------------------------------------------------------------|-------------|
-| Exercise 1                                                               |             |hudson
+| Exercise 1                                                               |  hudson     |
 | Exercise 2                                                               |             |
 | Exercise 3                                                               |             |
 | Exercise 4                                                               |             |
