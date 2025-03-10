@@ -186,6 +186,54 @@ For each of the following functions, give a $\Theta(t(n))$ estimation with the s
 \item $n \log(n^3) + n \log n$
 \item $2^{2 \log n} + 5n +1$
 \end{enumerate}
+
+\textbf{Answers:}
+\begin{description}
+    \item{1.} For $13n^2 - 2n + 56$ \\
+        $t(n)=\Theta(n^2)$
+
+    \item{2.} For $2.5\log(n) + 2$ \\
+            $t(n)=\Theta(\log(n))$
+    
+    \item{3.} For $n(12+log(n))$ \\
+            $t(n)=\Theta(n\log(n))$
+    
+    \item{4.} For $1 + 2 + 3 + ... + 2n$ \\ 
+            \[
+            \begin{aligned}
+            t(n) &= \frac{2n(2n+1)}{2}\\
+                &= n(n)\\
+            t(n) &= \Theta(n^2)\\
+            \end{aligned}
+            \]
+    
+    \item{5.} For $1 + 2 + 3 + ... + n^2$
+            \[
+                \begin{aligned}
+                    t(n) &= \frac{n^2(n^2-1)}{2}\\
+                         &= n^2(n^2)\\
+                    t(n) &= \Theta(n^4)
+                \end{aligned}
+            \]
+            
+    \item{6.} For $\log(n^3) + 10$\\
+            $t(n)=\Theta(\log(n))$
+    
+    \item{7.} For $\log(n^3) + n\log(n)$\\
+            $t(n)=\Theta(n\log(n))$
+    
+    \item{8.} For $n\log(n^3) + n\log(n^3)$\\
+            $t(n)=\Theta(n\log(n))$
+    
+    \item{9.} For $2^{2\log(n)} + 5n + 1$\\
+            \[
+                \begin{aligned}
+                    t(n) &=2^{\log(n^2)}\\
+                       t(n) &= \Theta(n^2)
+                \end{aligned}
+            \]
+\end{description}
+
 \bigskip
 
 \textbf{Exercise 2.}  
