@@ -261,54 +261,91 @@ For each of the following functions, give a $\Theta(t(n))$ estimation with the s
 
 \bigskip
 
-\textbf{Exercise 3.}
+\section*{Exercise 3}
 
-Consider the following algorithms $A$ and $B$ for the problem of computing $2^n \pmod{ 317}$ (This is the modular exponentiation problem that we  have discussed in class. Algorithm $A$ is the one that we have seen in class, and algorithm $B$ is a variant of it.
+Consider the algorithms A and B for computing $2^n \mod 317$.
 
+\subsection*{Algorithm A}
+\texttt{mod\_exp\_A(n)}:
 \begin{verbatim}
-Algorithm A.
-
-mod_exp_A(n) {
-   if (n== 0) return 1;
-   else {
-          t = mod_exp_A(n/2);  
-          if (n is even) return t*t (mod 317);
-          if (n is odd) return t*t*2 (mod 317);
-}}
+if (n == 0) return 1;
+else {
+    t = mod_exp_A(n/2);
+    if (n is even) return t*t (mod 317);
+    if (n is odd) return t*t*2 (mod 317);
+}
 \end{verbatim}
 
-
+\subsection*{Algorithm B}
+\texttt{mod\_exp\_B(n)}:
 \begin{verbatim}
-Algorithm B.
-
-mod_exp_B(n) {
-   if (n== 0) return 1;
-   else {
-          if (n is even) return   mod_exp_B(n/2) * mod_exp_B(n/2) (mod 317);
-          if (n is odd) return  mod_exp_B(n/2) * mod_exp_B(n/2) *2 (mod 317);
-}}
+if (n == 0) return 1;
+else {
+    if (n is even) return mod_exp_B(n/2) * mod_exp_B(n/2) (mod 317);
+    if (n is odd) return mod_exp_B(n/2) * mod_exp_B(n/2) * 2 (mod 317);
+}
 \end{verbatim}
 
-\begin{enumerate}
-\item Write the recurrence for the runtime $T_A(n)$ of algorithm A, and solve the recurrence to find a $\Theta( \cdot)$ estimation of $T_A(n)$.
-\item Write the recurrence for the runtime $T_B(n)$ of algorithm B, and solve the recurrence to find a $\Theta( \cdot)$ estimation of $T_B(n)$.
-\item Which algorithm is faster? (Note: There is a huge difference between $T_A$ and $T_B$.)
-\end{enumerate}
-\bigskip
+\subsection*{1. Recurrence for $T_A(n)$}
+For Algorithm A, the recurrence for the runtime $T_A(n)$ is:
+\[
+T_A(n) = T_A(n/2) + O(1)
+\]
+This is because we only make one recursive call, reducing the problem size by half at each step. Solving the recurrence using the master theorem, we get:
+\[
+T_A(n) = O(\log n)
+\]
 
-\textbf{Exercise 4.}
-Give a  $\Theta( \cdot)$ evaluation for the runtime of the following code:
+\subsection*{2. Recurrence for $T_B(n)$}
+For Algorithm B, the recurrence for the runtime $T_B(n)$ is:
+\[
+T_B(n) = 2T_B(n/2) + O(1)
+\]
+This is because two recursive calls are made in each step, both on a subproblem of size $n/2$. Solving the recurrence using the master theorem, we get:
+\[
+T_B(n) = O(n)
+\]
+
+\subsection*{3. Which algorithm is faster?}
+Algorithm A is significantly faster than Algorithm B. Algorithm A has a time complexity of $O(\log n)$, whereas Algorithm B has a time complexity of $O(n)$. Therefore, Algorithm A is much more efficient.
+
+\section*{Exercise 4}
+
+Consider the following code:
+
 \begin{verbatim}
- i= 1; x=0;
- while(i <= n) {
-       j=1;
-       while (j <= i) { x=x+1; j= 2*j; }
-       i= 2*i;
-}    
-
-
+i = 1; x = 0;
+while (i <= n) {
+    j = 1;
+    while (j <= i) {
+        x = x + 1;
+        j = 2 * j;
+    }
+    i = 2 * i;
+}
 \end{verbatim}
-Hint:  You can assume that $n$ is a power two.  Then $i$ from the outer loop takes successivley the values: $1, 2, 2^2, 2^3, ..., 2^{\log n}$. )
+
+We are asked to give a $\Theta(\cdot)$ evaluation of the runtime of this code.
+
+\subsection*{Outer Loop Analysis}
+In the outer loop, $i$ starts at 1 and doubles at each iteration. Therefore, $i$ takes the values:
+\[
+1, 2, 2^2, 2^3, \dots, 2^{\log n}
+\]
+Thus, the number of iterations of the outer loop is $\log n$.
+
+\subsection*{Inner Loop Analysis}
+For each iteration of the outer loop, the inner loop runs with $j$ starting from 1 and doubling each time. The number of iterations of the inner loop is $\log i$, where $i$ is the current value of the outer loop variable.
+
+\subsection*{Total Time Complexity}
+The total runtime is the sum of the iterations of the inner loop for each value of $i$:
+\[
+T(n) = \sum_{k=1}^{\log n} \log 2^k = \sum_{k=1}^{\log n} k = \frac{\log n (\log n + 1)}{2}
+\]
+Thus, the overall time complexity is:
+\[
+T(n) = \Theta((\log n)^2)
+\]
 \newpage
 
 \textbf{Programming task 1.}
