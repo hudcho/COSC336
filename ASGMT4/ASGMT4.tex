@@ -239,7 +239,23 @@ For each of the following functions, give a $\Theta(t(n))$ estimation with the s
 \textbf{Exercise 2.}  
 \begin{enumerate}
 \item Evaluate the following postfix arithmetic expression:  $10~3~4~-~5~*~/$
+    \newline\newline Stack.push(10) Stack.push(3) Stack.push(4)
+    \newline Que.Enq("-")
+    \newline Pop top two elements in the Stack use then use the operator in the que the "-"...
+    \newline Stack.Push(a- b)
+    \newline Push:Variables Enque:Operators
+    \newline if found operator grab top 2 of stack use the operator... 
+
+    \begin{verbatim}
+       10\((3-4)*5) = -2
+    \end{verbatim}
+
 \item Convert the following infix arithmetic expression to postfix notation: $(((2+3)*5)-15)$
+
+    Working backwards most inner...
+    \begin{verbatim}
+        23+5*15-  = 10
+    \end{verbatim}
 
 \end{enumerate}
 
