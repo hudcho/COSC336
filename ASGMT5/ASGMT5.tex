@@ -1,0 +1,226 @@
+\iffalse
+
+INSTRUCTIONS: (if this is not lecture1.tex, use the right file name)
+
+  Clip out the ********* INSERT HERE ********* bits below and insert
+appropriate TeX code.  Once you are done with your file, run
+
+  ``latex lecture1.tex''
+
+from a UNIX prompt.  If your LaTeX code is clean, the latex will exit
+back to a prompt.  Once this is done, run
+
+  ``dvips lecture1.dvi''
+
+which should print your file to the nearest printer.  There will be
+residual files called lecture1.log, lecture1.aux, and lecture1.dvi.
+All these can be deleted, but do not delete lecture1.tex.
+\fi
+%
+\documentclass[11pt]{article}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{listings}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\handout}[5]{
+   %\renewcommand{\thepage}{#1-\arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf Data Structures and Algorithms} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcommand{\lecture}[3]{\handout{L#1}{#2}{}{}{#1}}
+
+\def\squarebox#1{\hbox to #1{\hfill\vbox to #1{\vfill}}}
+\def\qed{\hspace*{\fill}
+        \vbox{\hrule\hbox{\vrule\squarebox{.667em}\vrule}\hrule}}
+\newenvironment{solution}{\begin{trivlist}\item[]{\bf Solution:}}
+                      {\qed \end{trivlist}}
+\newenvironment{solsketch}{\begin{trivlist}\item[]{\bf Solution Sketch:}}
+                      {\qed \end{trivlist}}
+\newenvironment{proof}{\begin{trivlist}\item[]{\bf Proof:}}
+                      {\qed \end{trivlist}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{Assertion}[theorem]{Assertion}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+%\newtheorem{observation}[theorem]{Observation}
+%\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{assumption}[theorem]{Assumption}
+
+%Put more macros here, as needed.
+\newcommand{\al}{\alpha}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\jac}[2]{\left(\frac{#1}{#2}\right)}
+\newcommand{\set}[1]{\{#1\}}
+
+\def\ppt{{\sf PPT}}
+\def\poly{{\sf poly}}
+\def\negl{{\sf negl}}
+\def\owf{{\sf OWF}}
+\def\owp{{\sf OWP}}
+\def\tdp{{\sf TDP}}
+\def\prg{{\sf PRG}}
+\def\prf{{\sf PRF}}
+
+%end of macros
+\begin{document}
+\fbox{
+\vbox{
+\begin{flushleft}
+Hudson Cho, Ryan Wilson, Jesse Washburn, Colin Shuster, Samhith Patibandla\\  % authors' names
+COSC 336 \\  %class
+04/2/2025\\  % date
+\end{flushleft}
+\center{\Large{\textbf{Assignment 5}}}
+%\end{mdframed}
+} % end vbox
+} % end fbox
+\vline
+\textbf{Instructions.}
+\begin{enumerate}
+\item Due date and time: As indicated on Blackboard.
+\item This is a team assignment. Work in teams of 3-4 students. Submit on Blackboard one assignment per team, with the names of all students making the team.
+\item The exercises will not be graded, but you still need to present your best attempt to solve them. If you do not know how to solve an exercise, say so. This will give the instructor feedback about your understanding of the theoretical concepts.
+\item Your programs must be written in Java.
+\item Write your programs neatly---imagine yourself grading your program and see if it is easy to read and understand. Comment your programs reasonably: there is no need to comment lines like “i++” but do include brief comments describing the main purpose of a specific block of lines.
+\item You will submit on Blackboard 2 files.
+
+The first file is a pdf file (produced ideally with LaTeX and Overleaf) and it will contain the following:
+        \begin{enumerate}
+        \item The solution to the Exercises.
+        \item A short description of your algorithm for the Programming Task, where you explain the dynamic programming approach. Focus on how you have modified MERGE.
+        \item A table with the results your program gives for the data sets indicated for the programming task.
+        \item The Java code (so that the grader can make observations) of the program.
+        \end{enumerate}
+The second file is the .java file containing the Java source code for the Programming Task.
+    \end{enumerate}
+\end{enumerate}
+\newpage
+
+\section*{Exercise 15.3-2 (Textbook, p.439)}
+\textbf{Problem:} Prove that a non-full binary tree cannot correspond to an optimal prefix-free code.
+\begin{proof}
+Assume for the sake of contradiction that there exists an optimal prefix-free code whose corresponding binary tree \(T\) is not full. Then there exists an internal node \(x\) in \(T\) that has exactly one child \(y\).
+
+Let the subtree rooted at \(y\) have a total weight \(W > 0\), where weight corresponds to the frequency of the symbols at the leaves. In the tree \(T\), every leaf in the subtree of \(y\) appears at a depth one greater than it would if the node \(x\) were removed.
+
+Now, construct a new tree \(T'\) by removing  \(x\) and connecting \(y\) directly to the parent of \(x\). As a consequence, the depth of every leaf in the subtree rooted at \(y\) decreases by 1. So, the weighted path length decreases by \(W\), i.e.
+\[
+C(T') = C(T) - W.
+\]
+Since \(W > 0\), it must be true that \(C(T') < C(T)\).
+
+This contradicts the assumption that \(T\) is optimal. Therefore, every internal node in an optimal prefix-free code must have two children, meaning that the corresponding binary tree must be full.
+\end{proof}
+
+\section*{Exercise 15.3-3 (Textbook, p.439)}
+\textbf{Problem:} What is an optimal Huffman code for the following set of frequencies, based on the first 8 Fibonacci numbers?
+\[
+a:1,\quad b:1,\quad c:2,\quad d:3,\quad e:5,\quad f:8,\quad g:13,\quad h:21.
+\]
+Can you generalize your answer to find the optimal code when the frequencies are the first Fibonacci numbers?
+
+\begin{solution}
+\end{solution}
+
+\section*{Programming Task}
+
+The input consists of a sequence of numbers $a[1], a[2] \ldots, a[n]$. Your task is to design an $O(n^2)$ algorithm that finds an increasing subsequence with the maximum possible sum. An increasing subsequence is given by a sequence of indices $1 \le i_1 < i_2 < \ldots < i_k \le n$ such that $a[i_1] \le a[i_2] \le \ldots \le a[i_k]$. Note the the indices defining the subsequence are not necessarily consecutive numbers. The program will output the max sum and the increasing subsequence with that sum.
+
+Your algorithm should work in time $O(n^2)$. For example, for sequence $1, 14, 5, 6, 2, 3$, the increasing subsequence $1, 14$ has the largest sum $1 + 14 = 15$. ($1, 5, 6$ is another increasing subsequence but its sum, $1 + 5 + 6 = 12$ is smaller.)
+
+Input specification: the first line contains $n$ and the second line contains $a_1, \ldots, a_n$. Numbers on the same line are separated by spaces. You may assume that $n$ is not bigger than $10,000$ and all the numbers fit in \texttt{int}.
+
+Output specification: the output contains the maximum possible sum of an increasing subsequence.
+
+Sample inputs:
+\begin{itemize}
+\item input-5.1.txt
+\item input-5.2.txt
+\end{itemize}
+
+Sample outputs:
+\begin{itemize}
+\item answer-5.1.txt
+\item answer-5.2.txt
+\end{itemize}
+
+Test your program on the following inputs:
+\begin{itemize}
+\item input-5.3.txt
+\item input-5.4.txt
+\end{itemize}
+and report in a table the results you have obtained for these two inputs. Label the results with appropriate text, for example "output for file input-*.*.txt", or something similar.
+
+Hint: You should use a dynamic programming algorithm. For each $i \le n$, define
+\[
+s[i] = \text{max sum of an increasing subsequence with last element } a[i],
+\]
+and
+\[
+p[i] = \text{index of the element preceding } a[i] \text{ in an increasing subsequence with max sum and last element } a[i].
+\]
+These are the "subproblems" used in the dynamic programming approach. As usual we solve them in order: first we compute $(s[1], p[1])$, next $(s[2], p[2])$, and so on till we compute $(s[n], p[n])$. Next we compute $\max\{s[i] \mid i \le n\}$, which is the value that we seek (the max sum of an increasing subsequence). Using the $p[i]$'s values we can reconstruct the increasing subsequence with this sum, by going backwards. More precisely, the $i$ for which $s[i]$ is maximum is the last index of an increasing subsequence with max sum, and next, starting from this last element, you go from predecessor to predecessor and construct the subsequence.
+
+Now you need to figure out how to solve the "subproblems."
+
+You start with $s[1] = a[1]$ and $p[1] = -1$ (-1 is a just a conventional value that indicates that $a[1]$ has no predecessor), and then, as explained above, in order you compute $s[2], s[3], \ldots s[n]$ and $p[2], \ldots, p[n]$. You need to think how to compute $s[i]$, using the preceding $s[j]$, $j < i$. At the end, you get the the subsequence in reverse order from last element to the first element.
+\newpage
+\section*{Programming Solution}
+
+\newpage
+\section*{Raw Code for Programming Task 1 }
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,  % Enables automatic line breaking
+    frame=single,     % Adds a border around the code
+    numbers=left,     % Adds line numbers
+    tabsize=4,        % Sets tab width
+    showstringspaces=false % Removes visible spaces in strings
+}
+\begin{lstlisting}[language=Java]
+import java.io.*;
+import java.util.*;
+
+public class Asgmt5Task {
+}
+\end{lstlisting}
+
+\end{document}
