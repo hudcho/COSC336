@@ -124,7 +124,7 @@ public class Assign5 {
         }
         System.err.println("]");
     }
-}
+
 /* 'Assign5' 
 
 Input File Name : input-5.1.txt
@@ -141,3 +141,4 @@ Max Sum Sequence : 130021 : [ ]
 
 PS C:\Users\Rwils\Desktop\Assignment5> 
  */
+}
