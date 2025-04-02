@@ -204,7 +204,21 @@ Now you need to figure out how to solve the "subproblems."
 You start with $s[1] = a[1]$ and $p[1] = -1$ (-1 is a just a conventional value that indicates that $a[1]$ has no predecessor), and then, as explained above, in order you compute $s[2], s[3], \ldots s[n]$ and $p[2], \ldots, p[n]$. You need to think how to compute $s[i]$, using the preceding $s[j]$, $j < i$. At the end, you get the the subsequence in reverse order from last element to the first element.
 \newpage
 \section*{Programming Solution}
+This table shows the results obtained from running the Java program on input files 5.3 & 5.4. Each row shows the maximum sum and the corresponding increasing subsequence for each input file.
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{llp{6cm}}
+        \toprule
+        \textbf{Input File} & \textbf{Maximum Sum} & \textbf{Increasing Subsequence} \\
+        \midrule
+        Output for input-5.3.txt & 130021 & 4601, 20255, 23073, 32092, 50000 \\
+        Output for input-5.4.txt & 143418 & 25197, 26355, 29960, 30953, 30953 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Results of Maximum Sum Increasing Subsequence Algorithm}
+    \label{tab:results}
+\end{table}
 \newpage
 \section*{Raw Code for Programming Task 1 }
 \lstset{
@@ -216,11 +230,79 @@ You start with $s[1] = a[1]$ and $p[1] = -1$ (-1 is a just a conventional value 
     showstringspaces=false % Removes visible spaces in strings
 }
 \begin{lstlisting}[language=Java]
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class Asgmt5Task {
-}
+    public static void main(String[] args) {
+        // For reading from file 
+    	try (Scanner sc = new Scanner(new File("input-5.4.txt"))) {
+    		// Read n
+            int n = sc.nextInt();
+            
+            // Read the array
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++) {
+                a[i] = sc.nextInt();
+            }
+            
+            // s[i] stores max sum ending at index i
+            int[] s = new int[n];
+            // p[i] stores previous index in the optimal subsequence
+            int[] p = new int[n];
+            
+            // Initialize first element
+            s[0] = a[0];
+            p[0] = -1;
+            
+            // Fill s[] and p[] arrays
+            for (int i = 1; i < n; i++) {
+                s[i] = a[i];  // s[i] = max sum of an increasing subsequence with last element a[i]
+                p[i] = -1;    // index of the element preceding a[i] in an increasing subsequence with max sum and last element a[i]
+                
+                // Check all previous elements
+                for (int j = 0; j < i; j++) {
+                    if (a[j] <= a[i] && s[j] + a[i] > s[i]) {
+                        s[i] = s[j] + a[i];
+                        p[i] = j;
+                    }
+                }
+            }
+            
+            // Find maximum sum and its ending index
+            int maxSum = s[0];
+            int endIndex = 0;
+            for (int i = 1; i < n; i++) {
+                if (s[i] > maxSum) {
+                    maxSum = s[i];
+                    endIndex = i;
+                }
+            }
+            
+            // Reconstruct the subsequence
+            List<Integer> subsequence = new ArrayList<>();
+            int current = endIndex;
+            while (current != -1) {
+                subsequence.add(a[current]);
+                current = p[current];
+            }
+            
+            // Print results
+            System.out.println("Maximum sum: " + maxSum);
+            System.out.print("Increasing subsequence: ");
+            // Print in correct order (reverse the list)
+            for (int i = subsequence.size() - 1; i >= 0; i--) {
+                System.out.print(subsequence.get(i));
+                if (i > 0) System.out.print(" ");
+            }
+            System.out.println();
+        } catch (FileNotFoundException e) {
+            System.out.println("Input file not found");
+            e.printStackTrace();
+        } // end try catch
+    	           
+    } // end main method
+} // end class
 \end{lstlisting}
 
 \end{document}
