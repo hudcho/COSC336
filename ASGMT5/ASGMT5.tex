@@ -24,6 +24,7 @@ All these can be deleted, but do not delete lecture1.tex.
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{listings}
+\usepackage{array}
 
 \hypersetup{
     colorlinks=true,
@@ -158,6 +159,49 @@ a:1,\quad b:1,\quad c:2,\quad d:3,\quad e:5,\quad f:8,\quad g:13,\quad h:21.
 Can you generalize your answer to find the optimal code when the frequencies are the first Fibonacci numbers?
 
 \begin{solution}
+\begin{center}
+    \begin{tabular}{| m{5em} | m{5em} |}
+        \hline
+        Character & Codeword \\
+        \hline
+         a & 1111100 \\
+         \hline
+         b & 1111101 \\
+         \hline
+         c & 111111 \\
+         \hline
+         d & 11110 \\
+         \hline
+         e & 1110 \\
+         \hline
+         f & 110 \\
+         \hline
+         g & 10 \\
+         \hline
+         h & 0 \\
+         \hline 
+    \end{tabular}
+\end{center}
+
+We can use this to find the optimal Huffman code for a character set whose frequencies correspond to the first $n$ Fibonacci numbers. Given a character set $C_1, C_2, ... C_n$, where $C_n$ has a frequency equal to the nth Fibonacci number, we define frequency rank \textit{k} such that: 
+\begin{itemize}
+    \item $C_n$, the most frequent character, has $k=1$
+    \item $C_{n-1}$, the second most frequent character, has $k=2$
+    \item $C_{n-3}$, the third most frequent character, has $k=3$, and so on
+\end{itemize}
+
+For characters from $C_4 \text{ to } C_n$ the codeword follows the pattern
+
+\begin{itemize}
+    \item $C_i$ is assigned $(k_i-1)$ ones appended with single 0, where $k_i$ is the frequency rating for $C_i$
+\end{itemize}
+
+The three least frequent characters ($C_1, C_2, C_3$) are assigned as follows: 
+\begin{itemize}
+    \item $C_3$ gets assigned $(k-1)$ ones followed by a 1 (Not a zero)
+    \item $C_2$ gets assigned $(k-2)$ ones followed by 01
+    \item $C_1$ gets assigned $(k-3)$ ones followed by a 00
+\end{itemize}
 \end{solution}
 
 \section*{Programming Task}
