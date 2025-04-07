@@ -107,7 +107,7 @@ All these can be deleted, but do not delete lecture1.tex.
 \begin{flushleft}
 Hudson Cho, Ryan Wilson, Jesse Washburn, Colin Shuster, Samhith Patibandla\\  % authors' names
 COSC 336 \\  %class
-04/2/2025\\  % date
+04/7/2025\\  % date
 \end{flushleft}
 \center{\Large{\textbf{Assignment 5}}}
 %\end{mdframed}
@@ -247,7 +247,23 @@ Now you need to figure out how to solve the "subproblems."
 
 You start with $s[1] = a[1]$ and $p[1] = -1$ (-1 is a just a conventional value that indicates that $a[1]$ has no predecessor), and then, as explained above, in order you compute $s[2], s[3], \ldots s[n]$ and $p[2], \ldots, p[n]$. You need to think how to compute $s[i]$, using the preceding $s[j]$, $j < i$. At the end, you get the the subsequence in reverse order from last element to the first element.
 \newpage
-\section*{Programming Solution}
+
+\section*{Code Description}
+
+This problem is a variation of the \textit{Longest Increasing Subsequence (LIS)} problem, where we aim to maximize the \textbf{sum} of the subsequence instead of its \textbf{length}. We solve it using a dynamic programming approach that adapts the MERGE logic from LIS algorithms.
+
+Let $s[i]$ be the maximum sum of an increasing subsequence ending at index $i$, and $p[i]$ the index of the previous element in that subsequence. We initialize $s[i] = a[i]$ and $p[i] = -1$. For each $i$, we consider all $j < i$ such that $a[j] \le a[i]$. If extending the subsequence ending at $j$ gives a higher sum, we update:
+\[
+s[i] = s[j] + a[i], \quad p[i] = j.
+\]
+
+This mimics the LIS MERGE step, but instead of extending based on length, we extend based on cumulative sum.
+
+Finally, we find the index $i$ with the largest $s[i]$, then reconstruct the subsequence by backtracking through $p[i]$.
+
+This algorithm runs in $\mathcal{O}(n^2)$ time.
+
+\section*{Output}
 This table shows the results obtained from running the Java program on input files 5.3 & 5.4. Each row shows the maximum sum and the corresponding increasing subsequence for each input file.
 
 \begin{table}[h]
@@ -263,7 +279,9 @@ This table shows the results obtained from running the Java program on input fil
     \caption{Results of Maximum Sum Increasing Subsequence Algorithm}
     \label{tab:results}
 \end{table}
+
 \newpage
+
 \section*{Raw Code for Programming Task 1 }
 \lstset{
     basicstyle=\ttfamily\footnotesize,
