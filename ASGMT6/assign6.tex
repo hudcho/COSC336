@@ -27,6 +27,10 @@ All these can be deleted, but do not delete lecture1.tex.
 \usepackage{pdfpages}
 \usepackage{graphics}
 \usepackage{graphicx}
+\usetikzlibrary{trees}
+\usepackage{listings}
+\usepackage{array}
+
 
 \hypersetup{
     colorlinks=true,
@@ -274,5 +278,239 @@ Report in the pdf file the first 25 pairs (you do complete preorder traversals b
 
 Report in the pdf file the first 25 pairs (as above).
 
+\pagebreak
+\section*{Code Description}
+    We are tasked with adding a size member to each node that will hold the number of nodes in the subtree rooted at a given node (including node itself). This is accomplished by adding an integer size member that is initilized to 1 when a new node is constructed. During insertion and rotation the size must also be corrected which is done by setting a given nodes size to  $1 + \text{Size}_\text{Right Subtree} + \text{Size}_\text{Left Subtree}$
+
+\begin{center}
+    \begin{tikzpicture}[sibling distance=1.5cm, level distance=1.5cm,
+      every node/.style = {shape=circle, draw, align=center}]
+    \node[draw=none, shape=rectangle] at (0,1) {Before Left Rotation};
+    \node {x}
+      child {node {C}}
+      child {node {y}
+        child {node {A}}
+        child {node {B}}
+      };
+    \end{tikzpicture}
+\hspace{2cm}
+    \begin{tikzpicture}[sibling distance=1.5cm, level distance=1.5cm,
+      every node/.style = {shape=circle, draw, align=center}]
+    \node[draw=none, shape=rectangle] at (0,1) {Tree 2 (After Left Rotation};
+    \node {y}
+      child {node {x}
+        child {node {C}}
+        child {node {A}}
+      }
+      child {node {B}};
+    \end{tikzpicture}
+
+\end{center}
+
+    Rotation is accomplished through a refactoring as seen above. The algorithm for leftRotate for example, first creates a pointer to \textit{y} and \textit{A}. We then assign \textit{y} as the new root by attaching the current root, \textit{x}, to its left link. We then restore the tree by assigning \textit{A} as the old root's right child. The function returns a pointer to the new root \textit{y}. This completes the rotation while still preserving the BST properties. After the rotation is complete size is adjusted in the same way as in the insert method. \\
+    \textit{NOTE}: rotateRight works in the exact way but mirrored.
+
+\pagebreak
+
+\section*{Output}
+\begin{center}
+\begin{tabular}{|p{10em}|p{30em}|} 
+\hline
+\textbf{Input} & \textbf{Output} \\ 
+\hline
+[7, 10, 3, 9, 13, 11] & Before rotation: (7, 6) (3, 1) (10, 4) (9, 1) (13, 2) (11, 1) \newline After left rotation: (10, 6) (7, 3) (3, 1) (9, 1) (13, 2) (11, 1) \\ 
+\hline 
+input-6-1.txt & Before rotation: (448, 1000) (184, 447) (43, 187) (10, 43) (4, 8) (0, 4) (3, 3) (1, 1) (4, 1) (9, 3) (5, 2) (8, 1) (32, 34) (23, 23) (11, 12) (13, 11) (12, 2) (12, 1) (16, 8) (14, 2) (15, 1) (23, 5) (21, 4) (18, 2) (20, 1) \newline After left rotation: (964, 1000) (448, 973) (184, 447) (43, 187) (10, 43) (4, 8) (0, 4) (3, 3) (1, 1) (4, 1) (9, 3) (5, 2) (8, 1) (32, 34) (23, 23) (11, 12) (13, 11) (12, 2) (12, 1) (16, 8) (14, 2) (15, 1) (23, 5) (21, 4) (18, 2) \\ 
+\hline 
+input-6-2.txt & Before rotation: (745, 10000) (151, 767) (8, 141) (3, 6) (2, 2) (3, 1) (6, 3) (4, 2) (4, 1) (105, 134) (63, 86) (63, 48) (9, 47) (54, 46) (21, 38) (21, 10) (20, 9) (18, 8) (18, 7) (16, 6) (14, 4) (11, 2) (12, 1) (16, 1) (18, 1) \newline After right rotation: (151, 10000) (8, 141) (3, 6) (2, 2) (3, 1) (6, 3) (4, 2) (4, 1) (105, 134) (63, 86) (63, 48) (9, 47) (54, 46) (21, 38) (21, 10) (20, 9) (18, 8) (18, 7) (16, 6) (14, 4) (11, 2) (12, 1) (16, 1) (18, 1) (46, 27) \\ 
+\hline
+\end{tabular}
+\end{center}
+
+\pagebreak
+\section*{Raw Code for Programming Task 1 }
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,  % Enables automatic line breaking
+    frame=single,     % Adds a border around the code
+    numbers=left,     % Adds line numbers
+    tabsize=4,        % Sets tab width
+    showstringspaces=false % Removes visible spaces in strings
+}
+\begin{lstlisting}[language=Java]
+import java.util.*;
+import java.io.*;
+
+class Node {
+    int key;
+    int size;
+    Node left, right;
+
+    public Node(int item)
+    {
+        key = item;
+        size = 1;
+        left = right = null;
+    }
+}
+
+class GfG {
+
+    // A utility function to insert a new node
+    // with the given key
+    static Node insert(Node root, int key)
+    {
+
+        // If the tree is empty, return a new node
+        if (root == null)
+            return new Node(key);
+
+        // Otherwise, recur down the tree
+        // Allows for duplicates, they get placed in left subtree
+        if (key <= root.key)
+            root.left = insert(root.left, key);
+        else
+            root.right = insert(root.right, key);
+
+        //increments root size by + size of left subtree and size of right subtree
+        root.size = 1 + getSize(root.left) + getSize(root.right);
+        // Return the (unchanged) node pointer
+        return root;
+    }
+
+    //rotateLeft method, accepts Node as parameter and returns pointer to new root after rotation
+    static Node rotateLeft(Node root) {
+        if (root == null || root.right == null)
+            return root;
+
+        //    X
+        //   / \
+        //  Z   Y
+        //     / \
+        //    A   B
+        //creates two new nodes, newRoot, which points to Y, and temp, which points to A and will become X.right after rotation
+        Node newRoot = root.right;
+        Node temp = newRoot.left;
+
+        //Rearranges tree to actually complete the rotation
+        newRoot.left = root;
+        root.right = temp;
+
+        //readjusts size
+        root.size = 1 + getSize(root.left) + getSize(root.right);
+        newRoot.size = 1 + getSize(newRoot.left) + getSize(newRoot.right);
+
+
+        return newRoot;
+    }
+
+
+    //Mirror function of rotateLeft, returns new pointer to new root after rotation
+    static Node rotateRight(Node root) {
+        if (root == null || root.left == null)
+            return root;
+        
+        //Pointers needed for rotation see rotateLeft for details
+        Node newRoot = root.left;
+        Node temp = newRoot.right;
+
+        //Rotation step
+        newRoot.right = root;
+        root.left = temp;
+
+        //Readjusts size of shifted nodes
+        root.size = 1 + getSize(root.left) + getSize(root.right);
+        newRoot.size = 1 + getSize(newRoot.left) + getSize(newRoot.right);
+
+
+        return newRoot;
+    }
+    
+    //Returns size of a given node
+    static int getSize(Node node) {
+        return (node == null) ? 0 : node.size;
+    }
+
+    // A utility function to print preorder tree traversal
+    static void preorder(Node root)
+    {
+        if (root != null) {
+            System.out.printf("(%d, %d) ", root.key, root.size);
+            preorder(root.left);
+            preorder(root.right);
+        }
+    }
+
+    //Utility method. Accepts an array of integers and returns the root of a tree with values from array inserted
+    static Node fillTreeFromArray(int[] arr) {
+        Node root = null;
+        for (int value : arr) {
+            root = insert(root, value);
+        }
+        return root;
+    }
+
+    //Utility method. Accepts filename and returns an array of integers obtained from file
+    static int[] fillArrFromFile(String fileName) {
+        try (Scanner scnr = new Scanner(new File(fileName))) {
+            int n = scnr.nextInt();
+            int[] arr = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                arr[i] = scnr.nextInt();
+            }
+            return arr;
+        }
+
+        catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    // Driver method
+    public static void main(String[] args)
+    {
+        int[] testData1 = {7, 10, 3, 9, 13, 11};
+
+        int[] testData2 = fillArrFromFile("input-6-1.txt");
+        if (testData2 == null) return;
+
+        int[] testData3 = fillArrFromFile("input-6-2.txt");
+        if (testData3 == null) return;
+
+        Node root1 = fillTreeFromArray(testData1);
+        Node root2 = fillTreeFromArray(testData2);
+        Node root3 = fillTreeFromArray(testData3);
+
+        System.out.println("Testing with test data 1");
+        System.out.print("Before rotation: ");
+        preorder(root1);
+        System.out.println();
+        root1 = rotateLeft(root1);
+        System.out.print("After left rotation around root: ");
+        preorder(root1);
+
+        System.out.println("\n\n***Testing with input-6-1***");
+        System.out.print("Before rotation: ");
+        preorder(root2);
+        System.out.println();
+        root2 = rotateLeft(root2);
+        System.out.print("After left rotation around root: ");
+        preorder(root2);
+
+        System.out.println("\n\n***Testing with input-6-2***");
+        System.out.print("Before rotation: ");
+        preorder(root3);
+        System.out.println();
+        root3 = rotateRight(root3);
+        System.out.print("After right rotation around root: ");
+        preorder(root3);
+
+    }
+}
+\end{lstlisting}
 
 \end{document}
