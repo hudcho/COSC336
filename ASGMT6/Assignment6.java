@@ -14,7 +14,7 @@ class Node {
     }
 }
 
-class Assignment6 {
+class GfG {
 
     // A utility function to insert a new node
     // with the given key
@@ -26,6 +26,7 @@ class Assignment6 {
             return new Node(key);
 
         // Otherwise, recur down the tree
+        // Allows for duplicates, they get placed in left subtree
         if (key <= root.key)
             root.left = insert(root.left, key);
         else
@@ -37,35 +38,21 @@ class Assignment6 {
         return root;
     }
 
-    static Node rotateRight(Node root) {
-        if (root == null || root.left == null)
-            return root;
-
-        //creates two new nodes to essentially act as temp nodes
-        Node newRoot = root.left;
-        Node temp = newRoot.right;
-
-        //actual rotation step.
-        newRoot.right = root;
-        root.left = temp;
-
-        //readjusts size
-        root.size = 1 + getSize(root.left) + getSize(root.right);
-        newRoot.size = 1 + getSize(newRoot.left) + getSize(newRoot.right);
-
-
-        return newRoot;
-    }
-
+    //rotateLeft method, accepts Node as parameter and returns pointer to new root after rotation
     static Node rotateLeft(Node root) {
         if (root == null || root.right == null)
             return root;
 
-        //creates two new nodes to essentially act as temp nodes
+        //    X
+        //   / \
+        //  Z   Y
+        //     / \
+        //    A   B
+        //creates two new nodes, newRoot, which points to Y, and temp, which points to A and will become X.right after rotation
         Node newRoot = root.right;
         Node temp = newRoot.left;
 
-        //actual rotation step.
+        //Rearranges tree to actually complete the rotation
         newRoot.left = root;
         root.right = temp;
 
@@ -77,11 +64,34 @@ class Assignment6 {
         return newRoot;
     }
 
+
+    //Mirror function of rotateLeft, returns new pointer to new root after rotation
+    static Node rotateRight(Node root) {
+        if (root == null || root.left == null)
+            return root;
+        
+        //Pointers needed for rotation see rotateLeft for details
+        Node newRoot = root.left;
+        Node temp = newRoot.right;
+
+        //Rotation step
+        newRoot.right = root;
+        root.left = temp;
+
+        //Readjusts size of shifted nodes
+        root.size = 1 + getSize(root.left) + getSize(root.right);
+        newRoot.size = 1 + getSize(newRoot.left) + getSize(newRoot.right);
+
+
+        return newRoot;
+    }
+    
+    //Returns size of a given node
     static int getSize(Node node) {
         return (node == null) ? 0 : node.size;
     }
 
-    // A utility function to do preorder tree traversal
+    // A utility function to print preorder tree traversal
     static void preorder(Node root)
     {
         if (root != null) {
@@ -91,6 +101,7 @@ class Assignment6 {
         }
     }
 
+    //Utility method. Accepts an array of integers and returns the root of a tree with values from array inserted
     static Node fillTreeFromArray(int[] arr) {
         Node root = null;
         for (int value : arr) {
@@ -99,6 +110,7 @@ class Assignment6 {
         return root;
     }
 
+    //Utility method. Accepts filename and returns an array of integers obtained from file
     static int[] fillArrFromFile(String fileName) {
         try (Scanner scnr = new Scanner(new File(fileName))) {
             int n = scnr.nextInt();
