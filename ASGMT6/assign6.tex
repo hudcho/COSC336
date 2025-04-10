@@ -307,7 +307,7 @@ Report in the pdf file the first 25 pairs (as above).
 
 \end{center}
 
-    Rotation is accomplished through a refactoring as seen above. The algorithm for leftRotate for example, first creates a pointer to \textit{y} and \textit{A}. We then assign \textit{y} as the new root by attaching the current root, \textit{x}, to its left link. We then restore the tree by assigning \textit{A} as the old root's right child. The function returns a pointer to the new root \textit{y}. This completes the rotation while still preserving the BST properties. After the rotation is complete size is adjusted in the same way as in the insert method. \\
+    Rotation is accomplished through a refactoring as seen above. The algorithm for leftRotate for example, first creates a pointer to \textit{y} and \textit{A}. We then assign \textit{y} as the new root by attaching the current root, \textit{x}, to its left link. We then restore the tree by assigning \textit{A} as the old root's right child. The function returns a pointer to the new root \textit{y}. This completes the rotation while still preserving the BST properties. After the rotation is complete size is adjusted as explained above. \\
     \textit{NOTE}: rotateRight works in the exact way but mirrored.
 
 \pagebreak
