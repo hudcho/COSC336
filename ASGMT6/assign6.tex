@@ -199,7 +199,13 @@ Let $\alpha$ be some constant, independent of the input array length $n$, strict
 \end{itemize}
 \medskip
 
-%\textbf{Answer:}
+\textbf{Answer:} $1 - 2\alpha$
+
+\textit{Justification:} To ensure both subarrays have size at least $\alpha n$, the pivot must not be among the smallest $\alpha n$ or the largest $\alpha n$ elements. Only the middle $(1 - 2\alpha)n$ elements satisfy this. Since the pivot is chosen uniformly at random, the probability is:
+\[
+\frac{(1 - 2\alpha)n}{n} = 1 - 2\alpha
+\]
+
 \bigskip
 
 
