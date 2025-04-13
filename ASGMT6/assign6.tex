@@ -167,6 +167,95 @@ $\bullet$ quadratic probing
 $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{7}$.
   
 \textbf{Answer:}
+\newline
+\begin{center}
+\begin{tabular}{|c c c |} 
+ \hline
+ Index & Key & $H_i(x)$ \\ 
+ \hline\hline
+ 0 & 22 &  $H_0(10)$ \\ 
+\hline
+ 1 & 88 & $H_1(88)$ \\ 
+ \hline
+ 2 & - & -  \\ 
+ \hline
+ 3 & - & -  \\ 
+ \hline
+ 4 & 4 & $H_0(4)$  \\ 
+ \hline
+ 5 & 15 & $H_1(15)$  \\
+  \hline
+6 & 28 & $H_0(28)$  \\ 
+ \hline
+ 7 & 17 & $H_1(17)$  \\ 
+ \hline
+ 8 & 59 & $H_4(59)$   \\ 
+ \hline
+ 9 & 31 & $H_0(31)$  \\
+  \hline
+10 & 10 & $H_0(10)$  \\
+  \hline
+\end{tabular}
+\end{center}
+\begin{verbatim}
+    Linear 
+    i = 0 : H(10) = (10 + 0) % 11 = 10 
+    i = 0 : H(22) = (22 + 0) % 11 = 0 
+    i = 0 : H(31) = (31 + 0) % 11 = 9
+    i = 0 : H(4) = (4 + 0) % 11 = 4
+    i = 0 : H(15) = (15 + 0) % 11 = 4
+    i = 1 : H(15) = (4 + 1) % 11 = 5
+    i = 0 : H(28) = (28 + 0) % 11 = 6
+    i = 0 : H(17) = (17 + 0) % 11 = 6
+    i = 1 : H(17) = (6 + 1) % 11 = 7
+    ...
+    i = 4 : H(88) = (4 + 4) % 11 = 8
+    
+\end{verbatim}
+
+\begin{center}
+\begin{tabular}{|c c c |} 
+ \hline
+ Index & Key & $H_i(x)$ \\ 
+ \hline\hline
+ 0 & 22 &  $H_0(10)$ \\ 
+\hline
+ 1 & 88 & $H_1(88)$ \\ 
+ \hline
+ 2 & - & -  \\ 
+ \hline
+ 3 & - & -  \\ 
+ \hline
+ 4 & 4 & $H_0(4)$  \\ 
+ \hline
+ 5 & 15 & $H_1(15)$  \\
+  \hline
+6 & 28 & $H_0(28)$  \\ 
+ \hline
+ 7 & 17 & $H_1(17)$  \\ 
+ \hline
+ 8 & 59 & $H_2(59)$   \\ 
+ \hline
+ 9 & 31 & $H_0(31)$  \\
+  \hline
+10 & 10 & $H_0(10)$  \\
+  \hline
+\end{tabular}
+\end{center}
+\begin{verbatim}
+    Quadratic
+    hi(X) = (Hash(X) + i2) % TableSize
+    h0(X) = Hash(X) % TableSize
+    h1(X) = Hash(X) + 1 % TableSize
+    h2(X) = Hash(X) + 4 % TableSize
+    h3(X) = Hash(X) + 9 % TableSize
+
+    i = 0^2 , 1^2 , 2^2 , 3^2 , ... 
+
+    all H_0 and H_1 are the same as linear...
+
+    only change H_2(59) = ( 4 + (2^2) ) % 11 = 8 
+\end{verbatim}
 \bigskip
 
 
