@@ -244,7 +244,7 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \end{center}
 \begin{verbatim}
     Quadratic
-    hi(X) = (Hash(X) + i2) % TableSize
+    hi(X) = (Hash(X) + i^2) % TableSize
     h0(X) = Hash(X) % TableSize
     h1(X) = Hash(X) + 1 % TableSize
     h2(X) = Hash(X) + 4 % TableSize
