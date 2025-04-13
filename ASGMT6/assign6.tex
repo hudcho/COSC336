@@ -168,6 +168,8 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
   
 \textbf{Answer:}
 \newline
+\newline
+\textbf{Linear}
 \begin{center}
 \begin{tabular}{|c c c |} 
  \hline
@@ -198,7 +200,6 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \end{tabular}
 \end{center}
 \begin{verbatim}
-    Linear 
     i = 0 : H(10) = (10 + 0) % 11 = 10 
     i = 0 : H(22) = (22 + 0) % 11 = 0 
     i = 0 : H(31) = (31 + 0) % 11 = 9
@@ -210,9 +211,11 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
     i = 1 : H(17) = (6 + 1) % 11 = 7
     ...
     i = 4 : H(88) = (4 + 4) % 11 = 8
+
     
 \end{verbatim}
-
+\pagebreak
+\textbf{Quadratic}
 \begin{center}
 \begin{tabular}{|c c c |} 
  \hline
@@ -243,7 +246,6 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \end{tabular}
 \end{center}
 \begin{verbatim}
-    Quadratic
     hi(X) = (Hash(X) + i^2) % TableSize
     h0(X) = Hash(X) % TableSize
     h1(X) = Hash(X) + 1 % TableSize
@@ -255,8 +257,56 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
     all H_0 and H_1 are the same as linear...
 
     only change H_2(59) = ( 4 + (2^2) ) % 11 = 8 
+
 \end{verbatim}
 \bigskip
+\textbf{Double hashing}
+\begin{center}
+\begin{tabular}{|c c c |} 
+ \hline
+ Index & Key & $H_i(x)$ \\ 
+ \hline\hline
+ 0 &  - &  - \\ 
+\hline
+ 1 & - & - \\ 
+ \hline
+ 2 & - & -  \\ 
+ \hline
+ 3 & - & -  \\ 
+ \hline
+ 4 & - & -  \\ 
+ \hline
+ 5 & 22 &  $H_0(x)= (0-6) \% 11$  \\
+  \hline
+6 & 10 &  $H_0(x)= (10-4) \% 11$\\ 
+ \hline
+ 7 & - & -  \\ 
+ \hline
+ 8 & - & -   \\ 
+ \hline
+ 9 & - & -  \\
+  \hline
+10 & - & -  \\
+  \hline
+\end{tabular}
+\end{center}
+\bigskip
+\begin{verbatim}
+    H_1(x) = x % 11
+    H_2(x) = (7-X) % 7
+    
+    H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
+    
+    i = 0, 1, 2, 3, 4... 
+    
+    iff no collisions i = 0 ==> ((0-1) * H_2(x)) = -H_2(x)
+    
+    Then... 
+    H_0(x) = (H_1(x) - H_2(x)) % 11
+    H_1(x) = (H_1(x) + (0) * H_2(x)) % 11
+    H_2(x) = (H_1(x) + (1) * H_2(x)) % 11
+\end{verbatim}
+
 
 
 
