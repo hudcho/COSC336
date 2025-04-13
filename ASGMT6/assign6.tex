@@ -266,7 +266,7 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
  \hline
  Index & Key & $H_i(x)$ \\ 
  \hline\hline
- 0 &  - &  - \\ 
+ 0 &  22 &  $H_1(22)=22\%11$ \\ 
 \hline
  1 & - & - \\ 
  \hline
@@ -274,37 +274,40 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
  \hline
  3 & - & -  \\ 
  \hline
- 4 & - & -  \\ 
+ 4 & 4 & $H_1(4)=4\%11$  \\ 
  \hline
- 5 & 22 &  $H_0(x)= (0-6) \% 11$  \\
+ 5 & - &  -  \\
   \hline
-6 & 10 &  $H_0(x)= (10-4) \% 11$\\ 
+6 & 15 &  $H_2(15)=(7-15)\%7$ \\ 
  \hline
  7 & - & -  \\ 
  \hline
  8 & - & -   \\ 
  \hline
- 9 & - & -  \\
+ 9 & 31 & $H_1(31)=31\%11$  \\
   \hline
-10 & - & -  \\
+10 & 10 & $H_1(10)=10\%11$  \\
   \hline
 \end{tabular}
 \end{center}
 \bigskip
 \begin{verbatim}
+    Issues
     H_1(x) = x % 11
     H_2(x) = (7-X) % 7
-    
+
+    The chapter PPT uses the following
     H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
+    i = 0, 1, 2, 3, 4 ...  
+
+    Either way using H_1(x) then H_2(x) or combining them with a incremental i
+    Key 28 runs into issues, a collision on either approach. but the issue is...
     
-    i = 0, 1, 2, 3, 4... 
-    
-    iff no collisions i = 0 ==> ((0-1) * H_2(x)) = -H_2(x)
-    
-    Then... 
-    H_0(x) = (H_1(x) - H_2(x)) % 11
-    H_1(x) = (H_1(x) + (0) * H_2(x)) % 11
-    H_2(x) = (H_1(x) + (1) * H_2(x)) % 11
+    H_1(28) = 6 
+    H_2(28) = 0
+
+    So H_i(x) will never produce a new index staying on H_i(x)=6 for all i.
+    and the H_1 then H_2 approach collids again on H_2(28)=0 
 \end{verbatim}
 
 
