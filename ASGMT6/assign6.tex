@@ -292,22 +292,37 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \end{center}
 \bigskip
 \begin{verbatim}
-    Issues
+    Given x = [10, 22, 31, 4, 15, 28, 17, 88, 59]
     H_1(x) = x % 11
     H_2(x) = (7-X) % 7
-
-    The chapter PPT uses the following
-    H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
-    i = 0, 1, 2, 3, 4 ...  
-
-    Either way using H_1(x) then H_2(x) or combining them with a incremental i
-    Key 28 runs into issues, a collision on either approach. but the issue is...
     
-    H_1(28) = 6 
-    H_2(28) = 0
+    Note: the chapter PPT uses the following
+    H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
+    i = 0, 1, 2, 3, 4 ...
 
+    I tried a few ways...
+    
+    H_1(x) then H_2(x)
+    Issue: No H_3(x) and no 'i', if we just use H_1(x) then H_2(x) 
+           there is no H_3(x) or H_4(x) 
+             
+    Stops working at key 28, H_2(28)=0 and zero is another collision...
+
+    H_1(x) then H_2(H_1(x))
+    Issue: If we use H_1(x) then H_2(H_1(x)). That would allow for a 
+            H_3(H_2(H_1(x))) but gets stuck if any return 0
+             
+    Stops working at 88 as H_1(88)=0 and H_2(0)=0 then H_3(H_2(0))=0...
+
+     H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
+     Issue: If we use the PPT formula it combines both H_1(x) and H_2(x) 
+            but produces a diffrent H_0(x) and gets stuck on key 28
+            (when following the formula from i=0 H_0(x) on all keys).
+            
+    Stops on key 28's issue, H_2(28) = (7-28)mod7 = 0.
+    Making no changes even with increasing i's. 
     So H_i(x) will never produce a new index staying on H_i(x)=6 for all i.
-    and the H_1 then H_2 approach collids again on H_2(28)=0 
+
 \end{verbatim}
 
 
