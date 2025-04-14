@@ -266,27 +266,27 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
  \hline
  Index & Key & $H_i(x)$ \\ 
  \hline\hline
- 0 &  22 &  $H_1(22)=22\%11$ \\ 
+ 0 &  22 &  $H_0(22)= (22\%11)$ \\ 
 \hline
- 1 & - & - \\ 
+ 1 & 88 & $H_4(88)= ( 0+ 4 * 3 )\%11$ \\ 
  \hline
  2 & - & -  \\ 
  \hline
- 3 & - & -  \\ 
+ 3 & 17 & $H_2(17)= (6 + 2 * 4)\%11$  \\ 
  \hline
- 4 & 4 & $H_1(4)=4\%11$  \\ 
+ 4 & 4 & $H_0(4)= 4\%11$  \\ 
  \hline
- 5 & - &  -  \\
+ 5 & 15 &  $H_2(15)= (4 + 2*6)\%11$  \\
   \hline
-6 & 15 &  $H_2(15)=(7-15)\%7$ \\ 
+6 &28 &  $H_0(28)=(6+ 0 )\%11$ \\ 
  \hline
  7 & - & -  \\ 
  \hline
- 8 & - & -   \\ 
+ 8 & 59 & $H_1(59)= (4 + 1 * 4)\%11$   \\ 
  \hline
- 9 & 31 & $H_1(31)=31\%11$  \\
+ 9 & 31 & $H_0(31)= (31\%11 + 0)\%11$ \\
   \hline
-10 & 10 & $H_1(10)=10\%11$  \\
+10 & 10 & $H_0(10)= (10\%11 + 0)\%11$  \\
   \hline
 \end{tabular}
 \end{center}
@@ -294,35 +294,23 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \begin{verbatim}
     Given x = [10, 22, 31, 4, 15, 28, 17, 88, 59]
     H_1(x) = x % 11
-    H_2(x) = (7-X) % 7
+    H_2(x) = (7-x) % 7
     
     Note: the chapter PPT uses the following
     H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
     i = 0, 1, 2, 3, 4 ...
 
-    I tried a few ways...
-    
-    H_1(x) then H_2(x)
-    Issue: No H_3(x) and no 'i', if we just use H_1(x) then H_2(x) 
-           there is no H_3(x) or H_4(x) 
-             
-    Stops working at key 28, H_2(28)=0 and zero is another collision...
-
-    H_1(x) then H_2(H_1(x))
-    Issue: If we use H_1(x) then H_2(H_1(x)). That would allow for a 
-            H_3(H_2(H_1(x))) but gets stuck if any return 0
-             
-    Stops working at 88 as H_1(88)=0 and H_2(0)=0 then H_3(H_2(0))=0...
-
-     H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
      Issue: If we use the PPT formula it combines both H_1(x) and H_2(x) 
             but produces a diffrent H_0(x) and gets stuck on key 28
             (when following the formula from i=0 H_0(x) on all keys).
-            
-    Stops on key 28's issue, H_2(28) = (7-28)mod7 = 0.
-    Making no changes even with increasing i's. 
-    So H_i(x) will never produce a new index staying on H_i(x)=6 for all i.
 
+    We used : H_i(x) = ((H_1(x))+(i)*(H_2(x))) mod 11
+
+    all keys worked but key 28 could present issues if 6 index was taken first as 
+    H_2(28) = 0
+    7-28 = -21 
+    -21 mod 7 = 0
+    No incrementing of i will allow for another index to generate...
 \end{verbatim}
 
 
