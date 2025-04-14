@@ -111,11 +111,11 @@ All these can be deleted, but do not delete lecture1.tex.
 
 \fbox{
 \vbox{
-\begin{flushleft}
-Ann,  Bob, Charlie    (\emph{replace with your names and correct the date})\\  % authors' names
-COSC 336 \\  %class
-3/19/2500\\  % date
-\end{flushleft}
+    \begin{flushleft}
+        Hudson Cho, Ryan Wilson, Jesse Washburn, Colin Shuster, Samhith Patibandla\\  % authors' names
+        COSC 336 \\  %class
+        04/10/2025\\  % date
+    \end{flushleft}
 \center{\Large{\textbf{Assignment 6}}}
 } % end vbox
 } % end fbox
@@ -294,23 +294,10 @@ $\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{
 \begin{verbatim}
     Given x = [10, 22, 31, 4, 15, 28, 17, 88, 59]
     H_1(x) = x % 11
-    H_2(x) = (7-x) % 7
-    
-    Note: the chapter PPT uses the following
-    H_i(x) = (H_1(x) + (i-1) * H_2(x)) mod 11
-    i = 0, 1, 2, 3, 4 ...
-
-     Issue: If we use the PPT formula it combines both H_1(x) and H_2(x) 
-            but produces a diffrent H_0(x) and gets stuck on key 28
-            (when following the formula from i=0 H_0(x) on all keys).
+    H_2(x) = 7 - (x % 7)
 
     We used : H_i(x) = ((H_1(x))+(i)*(H_2(x))) mod 11
 
-    all keys worked but key 28 could present issues if 6 index was taken first as 
-    H_2(28) = 0
-    7-28 = -21 
-    -21 mod 7 = 0
-    No incrementing of i will allow for another index to generate...
 \end{verbatim}
 
 
