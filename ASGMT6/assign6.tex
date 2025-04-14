@@ -148,159 +148,97 @@ The \textbf{2-nd file} is the .java file containing the java source code for Pro
 \newpage
 
 
+\textbf{Exercise 1.} Consider inserting the keys 
+\[
+10,\; 22,\; 31,\; 4,\; 15,\; 28,\; 17,\; 88,\; 59
+\]
+into a hash table of length \(m = 11\) using open addressing with the hash function 
+\[
+h(x)=x \bmod 11.
+\]
+We illustrate the result for:
 
-
-
-
-
-
-
-
-\textbf{Exercise 1.} Consider inserting the keys $10, 22, 31, 4, 15, 28, 17, 88, 59$ into a hash table of length $m=11$ using open addressing with the  hash function $h(x) = x \pmod{11}$ and linear probing, quadratic probing, and double probing. Illustrate  the result by showing the 3 tables obtained  after inserting these keys using 
-
-$\bullet$ linear probing, 
-
-$\bullet$ quadratic probing
-
-
-
-$\bullet$ double hashing with $h_1(x) = x \pmod{11} $ and $h_2(x) = 7 - x \pmod{7}$.
-  
-\textbf{Answer:}
-\newline
-\newline
-\textbf{Linear}
-\begin{center}
-\begin{tabular}{|c c c |} 
- \hline
- Index & Key & $H_i(x)$ \\ 
- \hline\hline
- 0 & 22 &  $H_0(10)$ \\ 
-\hline
- 1 & 88 & $H_1(88)$ \\ 
- \hline
- 2 & - & -  \\ 
- \hline
- 3 & - & -  \\ 
- \hline
- 4 & 4 & $H_0(4)$  \\ 
- \hline
- 5 & 15 & $H_1(15)$  \\
-  \hline
-6 & 28 & $H_0(28)$  \\ 
- \hline
- 7 & 17 & $H_1(17)$  \\ 
- \hline
- 8 & 59 & $H_4(59)$   \\ 
- \hline
- 9 & 31 & $H_0(31)$  \\
-  \hline
-10 & 10 & $H_0(10)$  \\
-  \hline
-\end{tabular}
-\end{center}
-\begin{verbatim}
-    i = 0 : H(10) = (10 + 0) % 11 = 10 
-    i = 0 : H(22) = (22 + 0) % 11 = 0 
-    i = 0 : H(31) = (31 + 0) % 11 = 9
-    i = 0 : H(4) = (4 + 0) % 11 = 4
-    i = 0 : H(15) = (15 + 0) % 11 = 4
-    i = 1 : H(15) = (4 + 1) % 11 = 5
-    i = 0 : H(28) = (28 + 0) % 11 = 6
-    i = 0 : H(17) = (17 + 0) % 11 = 6
-    i = 1 : H(17) = (6 + 1) % 11 = 7
-    ...
-    i = 4 : H(88) = (4 + 4) % 11 = 8
-
-    
-\end{verbatim}
-\pagebreak
-\textbf{Quadratic}
-\begin{center}
-\begin{tabular}{|c c c |} 
- \hline
- Index & Key & $H_i(x)$ \\ 
- \hline\hline
- 0 & 22 &  $H_0(10)$ \\ 
-\hline
- 1 & 88 & $H_1(88)$ \\ 
- \hline
- 2 & - & -  \\ 
- \hline
- 3 & - & -  \\ 
- \hline
- 4 & 4 & $H_0(4)$  \\ 
- \hline
- 5 & 15 & $H_1(15)$  \\
-  \hline
-6 & 28 & $H_0(28)$  \\ 
- \hline
- 7 & 17 & $H_1(17)$  \\ 
- \hline
- 8 & 59 & $H_2(59)$   \\ 
- \hline
- 9 & 31 & $H_0(31)$  \\
-  \hline
-10 & 10 & $H_0(10)$  \\
-  \hline
-\end{tabular}
-\end{center}
-\begin{verbatim}
-    hi(X) = (Hash(X) + i^2) % TableSize
-    h0(X) = Hash(X) % TableSize
-    h1(X) = Hash(X) + 1 % TableSize
-    h2(X) = Hash(X) + 4 % TableSize
-    h3(X) = Hash(X) + 9 % TableSize
-
-    i = 0^2 , 1^2 , 2^2 , 3^2 , ... 
-
-    all H_0 and H_1 are the same as linear...
-
-    only change H_2(59) = ( 4 + (2^2) ) % 11 = 8 
-
-\end{verbatim}
 \bigskip
-\textbf{Double hashing}
-\begin{center}
-\begin{tabular}{|c c c |} 
- \hline
- Index & Key & $H_i(x)$ \\ 
- \hline\hline
- 0 &  22 &  $H_0(22)= (22\%11)$ \\ 
+
+\textbf{(a) Linear Probing}\\[2mm]
+The probe sequence is 
+\[
+H_i(x)=\bigl(h(x)+i\bigr) \bmod 11,\quad i=0,1,2,\dots
+\]
+The final table is:
+\[
+\begin{array}{|c|c|}
 \hline
- 1 & 88 & $H_4(88)= ( 0+ 4 * 3 )\%11$ \\ 
- \hline
- 2 & - & -  \\ 
- \hline
- 3 & 17 & $H_2(17)= (6 + 2 * 4)\%11$  \\ 
- \hline
- 4 & 4 & $H_0(4)= 4\%11$  \\ 
- \hline
- 5 & 15 &  $H_2(15)= (4 + 2*6)\%11$  \\
-  \hline
-6 &28 &  $H_0(28)=(6+ 0 )\%11$ \\ 
- \hline
- 7 & - & -  \\ 
- \hline
- 8 & 59 & $H_1(59)= (4 + 1 * 4)\%11$   \\ 
- \hline
- 9 & 31 & $H_0(31)= (31\%11 + 0)\%11$ \\
-  \hline
-10 & 10 & $H_0(10)= (10\%11 + 0)\%11$  \\
-  \hline
-\end{tabular}
-\end{center}
+\textbf{Index} & \textbf{Key} \\ \hline
+0  & 22 \\ \hline
+1  & 88 \\ \hline
+2  & \;-\; \\ \hline
+3  & \;-\; \\ \hline
+4  & 4  \\ \hline
+5  & 15 \\ \hline
+6  & 28 \\ \hline
+7  & 17 \\ \hline
+8  & 59 \\ \hline
+9  & 31 \\ \hline
+10 & 10 \\ \hline
+\end{array}
+\]
+
 \bigskip
-\begin{verbatim}
-    Given x = [10, 22, 31, 4, 15, 28, 17, 88, 59]
-    H_1(x) = x % 11
-    H_2(x) = 7 - (x % 7)
 
-    We used : H_i(x) = ((H_1(x))+(i)*(H_2(x))) mod 11
+\textbf{(b) Quadratic Probing}\\[2mm]
+The probe sequence is 
+\[
+H_i(x)=\bigl(h(x)+i^2\bigr) \bmod 11,\quad i=0,1,2,\dots
+\]
+The final table is:
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Index} & \textbf{Key} \\ \hline
+0  & 22 \\ \hline
+1  & 88 \\ \hline
+2  & \;-\; \\ \hline
+3  & \;-\; \\ \hline
+4  & 4  \\ \hline
+5  & 15 \\ \hline
+6  & 28 \\ \hline
+7  & 17 \\ \hline
+8  & 59 \\ \hline
+9  & 31 \\ \hline
+10 & 10 \\ \hline
+\end{array}
+\]
 
-\end{verbatim}
+\bigskip
 
-
+\textbf{(c) Double Hashing}\\[2mm]
+Let 
+\[
+h_1(x)= x\mod 11,\qquad h_2(x)= 7 - \left(x\mod 7\right).
+\]
+The probe sequence is 
+\[
+H_i(x)=\bigl(h_1(x)+i\,h_2(x)\bigr) \bmod 11,\quad i=0,1,2,\dots
+\]
+The final table is:
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Index} & \textbf{Key} \\ \hline
+0  & 22 \\ \hline
+1  & 88 \\ \hline
+2  & \;-\; \\ \hline
+3  & 17 \\ \hline
+4  & 4  \\ \hline
+5  & 15 \\ \hline
+6  & 28 \\ \hline
+7  & \;-\; \\ \hline
+8  & 59 \\ \hline
+9  & 31 \\ \hline
+10 & 10 \\ \hline
+\end{array}
+\]
 
 
 
