@@ -1,10 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-
-
-  
-  public class Adj_List_Graph{
+public class Adj_List_Graph{
     int n;  // no of nodes
     ArrayList<ArrayList<Integer> > adj; 
     
@@ -40,6 +37,39 @@ import java.io.*;
         System.out.println();
       }
     }
+
+    public static Adj_List_Graph file_Intake() throws FileNotFoundException {
+      Scanner scnr = new Scanner(System.in);
+  
+      System.out.print("Input File Name : ");
+      String userVar = scnr.next();
+  
+      try {
+        while (!new File(userVar).exists()) {
+          System.out.print("Input File Name : ");
+          userVar = scnr.next();
+        }
+        System.out.println();
+        Scanner scnrX = new Scanner(new File(userVar));
+  
+        int n = scnrX.nextInt();
+        Adj_List_Graph x = new Adj_List_Graph(n);
+  
+        int k = 0;
+        
+        while (scnrX.hasNextInt()) {
+          int key = k / n;
+          int in = scnrX.nextInt();
+          if (in == 1) {
+            x.addEdge(key, k % n);
+          }
+          k++;
+        }
+        return x;
+      } catch (FileNotFoundException e) {
+        System.out.println("Error File Not Found...");
+        return null;
+      }
+    }
+
   }
-  
-  
