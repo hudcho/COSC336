@@ -32,5 +32,17 @@ Adjacency list of vertex 2  :  head
 Adjacency list of vertex 3  :  head -> 4
 Adjacency list of vertex 4  :  head
 
-PS C:\Users\Rwils\Desktop\Assign7>
+*/
+/** 'Test_Adj' 
+Input File Name : input-7-1.txt
+
+Origonal Graph
+Adjacency list of vertex 0  :  head -> 1
+Adjacency list of vertex 1  :  head -> 2
+Adjacency list of vertex 2  :  head
+
+Graph^2
+Adjacency list of vertex 0  :  head -> 1 -> 2
+Adjacency list of vertex 1  :  head -> 2
+Adjacency list of vertex 2  :  head
  */
