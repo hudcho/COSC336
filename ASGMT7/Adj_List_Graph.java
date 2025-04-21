@@ -26,22 +26,22 @@ public class Adj_List_Graph {
    public Adj_List_Graph graphSquared() {
 
       Adj_List_Graph squareGraph = new Adj_List_Graph(n);
-      LinkedList<Integer> pathFrom = new LinkedList<>();
+      LinkedList<Integer> pathNext = new LinkedList<>();
       int[] pathLength = new int[n];
 
-      for (int currBFS = 0; currBFS < n; ++currBFS) {
+      for (int originBFS = 0; originBFS < n; ++originBFS) {
 
-         pathFrom.clear();
-         pathFrom.add(currBFS);
+         pathNext.clear();
+         pathNext.add(originBFS);
 
          for (int k = 0; k < n; k++) {
             pathLength[k] = -1;
          }
-         pathLength[currBFS] = 0;
+         pathLength[originBFS] = 0;
 
-         while (!pathFrom.isEmpty()) {
+         while (!pathNext.isEmpty()) {
 
-            int fromNode = pathFrom.removeFirst();
+            int fromNode = pathNext.removeFirst();
 
             if (pathLength[fromNode] < 2) {
                for (int j = 0; j < adj.get(fromNode).size(); j++) {
@@ -52,10 +52,10 @@ public class Adj_List_Graph {
 
                      pathLength[toNode] = pathLength[fromNode] + 1;
 
-                     pathFrom.addLast(toNode);
+                     pathNext.addLast(toNode);
 
                      if (pathLength[toNode] <= 2) {
-                        squareGraph.addEdge(currBFS, adj.get(fromNode).get(j));
+                        squareGraph.addEdge(originBFS, adj.get(fromNode).get(j));
                      }
 
                   }
