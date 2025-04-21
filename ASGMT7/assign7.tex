@@ -104,7 +104,18 @@ All these can be deleted, but do not delete lecture1.tex.
 %end of macros
 \begin{document}
 
-\lecture{COSC  336 		Assignment 7}{}{}
+\fbox{
+\vbox{
+    \begin{flushleft}
+        Hudson Cho, Ryan Wilson, Jesse Washburn, Colin Shuster, Samhith Patibandla\\  % authors' names
+        COSC 336 \\  %class
+        04/20/2025\\  % date
+    \end{flushleft}
+\center{\Large{\textbf{Assignment 7}}}
+} % end vbox
+} % end fbox
+\vline
+
 \textbf{Instructions.}
 \begin{enumerate}
 \item Due date and time: As indicated on Blackboard. 
@@ -179,11 +190,82 @@ To append in the  latex file a .jpg file (for a photo), use
 
 %%%%%%%%%%%%%%
 
-\textbf{Exercise 1.} Show similarly to Fig 8.3 on page 198 in the textbook, how \textsf{RadixSort} sorts the following arrays:
+\textbf{Exercise 1.} Show similarly to Fig 8.3 on page 212 in the textbook, how \textsf{RadixSort} sorts the following arrays:
+
 \begin{enumerate}
+
 \item 34, 9134, 20134, 29134, 4, 134
+
+
+\begin{center}
+\begin{tabular}{|c c c c c c |} 
+ \hline
+ Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ \hline\hline
+ 00034 & - & 00004 & - &   00004 &  00004 \\ 
+\hline
+ 09134 & - & 00034 &  - & 00034 & 00034\\ 
+ \hline
+ 20134 & - & 09134  & - & 20134 & 00134 \\ 
+ \hline
+ 29134 & - & 20134  & - &  00134 & 09134  \\ 
+ \hline
+ 00004 & - & 29134 &  - & 09134 &  20134  \\ 
+  \hline
+  00134 & - & 00134  &  - &  29134 &  29134\\ 
+  \hline
+\end{tabular}
+\end{center}
+
+
 \item 4, 34, 134, 9134, 20134, 29134
+
+
+\begin{center}
+    
+\begin{tabular}{|c c c c c c |} 
+ \hline
+ Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ \hline\hline
+ 00004 & - & - & - &    00004 &  00004  \\ 
+\hline
+ 00034 & - & - &  - & 00034 & 00034 \\ 
+ \hline
+ 00134  & - & -  & - &  00134  &  00134  \\ 
+ \hline
+ 09134 & - & -  & - &  20134 & 09134 \\ 
+ \hline
+ 20134 & - & - &  - & 09134 &  20134  \\ 
+  \hline
+  29134 & - & -  &  - &  29134 &  29134 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+
 \item 29134, 20134, 9134, 134, 34, 4
+
+\begin{center}
+    
+\begin{tabular}{|c c c c c c |} 
+ \hline
+ Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ \hline\hline
+ 29134 & - & 00004 & 00004 &    00004 &  00004  \\ 
+\hline
+ 20134 & - &29134 &   00034 & 00034 & 00034 \\ 
+ \hline
+ 09134  & - & 20134  &29134 &  20134  &  00134  \\ 
+ \hline
+ 00134 & - & 09134   & 20134&  00134 & 09134 \\ 
+ \hline
+ 00034 & - & 00134& 09134  & 29134 &  20134  \\ 
+  \hline
+  00004 & - &  00034  & 00134 &  09134 &  29134 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
 \end{enumerate}
 
 \textbf{Exercise 2.} Present an $O(n)$ algorithm that sorts $n$ positive integer numbers  $a_1, a_2, \ldots, a_n$ which are known to be bounded by $n^2-1$ (so $0 \leq a_i \leq n^2-1$, for every $i=1, \ldots, n$. Use the idea of Radix Sort  (discussed in class and presented in Section 8.3 in the textbook).
