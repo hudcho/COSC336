@@ -5,7 +5,7 @@ public class Test_Adj {
    public static void main(String[] args) throws FileNotFoundException {
 
       Adj_List_Graph k = Adj_List_Graph.file_Intake();
-      System.out.print("\nOrigonal Graph");
+      System.out.print("\nOriginal Graph");
       k.printGraph();
 
       System.out.print("\n\nGraph^2");
