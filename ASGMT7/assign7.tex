@@ -288,6 +288,105 @@ In this 2-nd example $n=20$, because there are $20$ positive numbers in the sequ
 
 Note: if you use a base $b$ bigger than 10, you do not need to invent symbols for the digits larger than 10; instead use as digits the numbers $0,1, \ldots, b-1$ represented in base 10. For instance if you use base, say 25, the digits will be: 0,1, \ldots, 9, 10, 11, \ldots, 23, 24. So  we view `10', `11', etc., as a single symbol. For instance in this representation the number 9 23 written in base 25 has 2 digits: 9 and 23. 
 
+\medbreak
+\textbf{Solution:}
+To obtain an algorithm that runs in $O(n)$ we will use a modified radix sort. Since radix sort runs in $O(d(n+k))$ where: 
+\begin{itemize}
+        \item \textit{d} is the number of digits,
+    \item \textit{n} is the number of input values, and
+    \item \textit{k} is the base of the numbers.
+\end{itemize}
+    In this case we want to keep \textit{d} constant, so if we choose a base \textit{k} such that every input value can be represented with 2 digits in base \textit{k} then we have $d = 2$. The the largest number we can represent in base \textit{k} is $k^2-1$ (since the total number of 2-digit numbers in base \textit{k} is $k^2$, with all of them being in the range of $0 \text{ to } k^2-1$)$.
+
+    Additionally, we are told that the numbers have an upper bound of $n^2-1$. Using this we must make sure that whatever base we choose can represent\textemdash in 2 digits\textemdash a number as big as $n^2-1$. This gives us the inequality $k^2-1\geq n^2-1$. Solving this gives us $k\geq n$, so to keep things simple we will choose our base $k = n$. In other words if the input is of size $n=12$, we will rewrite the input values in base 12 and then run radix sort. Since \textit{d} is constant and since $k = n$ our runtime is $O(2(n+n) \rightarrow O(4n) \rightarrow O(n)$.
+
+\pagebreak
+
+\begin{center}
+\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|p{7em}|} 
+\hline
+\textbf{Input} & \textbf{Converted to base 12} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted to base 10} \\ 
+\hline
+45 & [3,9]  & [11,0]  & [0,3]    & 3   \\
+\hline
+98 & [8,2]  & [6,0]   & [0,7]    & 7   \\
+\hline
+3  & [0,3]  & [8,2]   & [2,4]    & 28  \\
+\hline
+82 & [6,10] & [0,3]   & [3,9]    & 45  \\
+\hline
+132& [11,0] & [2,4]   & [3,9]    & 45  \\
+\hline
+71 & [5,11] & [0,7]   & [5,11]   & 71  \\
+\hline
+72 & [6,0]  & [7,7]   & [6,0]    & 72  \\
+\hline
+143& [11,11]& [3,9]   & [6,10]   & 82  \\
+\hline
+91 & [7,7]  & [3,9]   & [7,7]    & 91  \\
+\hline
+28 & [2,4]  & [6,10]  & [8,2]    & 98  \\
+\hline
+7  & [0,7]  & [5,11]  & [11,0]   & 132 \\
+\hline
+45 & [3,9]  & [11,11] & [11,11]  & 143 \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|p{7em}|} 
+\hline
+\textbf{Input} & \textbf{Converted to base 20} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted to base 10} \\ 
+
+\hline
+45   & [2, 5] & [1, 1] & [0, 3] & 3 \\
+\hline
+98   & [4, 18] & [4, 2] & [0, 7] & 7\\
+\hline
+3    & [0, 3] & [0, 3] & [1, 1] & 21\\
+\hline
+82   & [4, 2] & [7, 3] & [1, 8] & 28\\
+\hline
+132  & [6, 12] & [2, 5] & [2, 5] & 45\\
+\hline
+71   & [3, 11] & [2, 5] & [2, 5] & 45\\
+\hline
+72   & [3, 12] & [7, 5] & [3, 11] & 71 \\
+\hline
+143  & [7, 3] & [17, 6] & [3, 12] & 72\\
+\hline
+91   & [4, 11] & [0, 7] & [4, 2] & 82\\
+\hline
+28   & [1, 8] & [13, 7] & [4, 11] & 91 \\
+\hline
+7    & [0, 7] & [1, 8] & [4, 18] & 98\\
+\hline
+45   & [2, 5] & [3, 11] & [6, 12] & 132\\
+\hline
+151  & [7, 11] & [4, 11] & [7, 3] & 143\\
+\hline
+175  & [8, 15] & [7, 11] & [7, 5] & 145\\
+\hline
+145  & [7, 5] & [6, 12] & [7, 11] & 151\\
+\hline
+399  & [19, 19] & [3, 12] & [8, 15] & 175\\
+\hline
+21   & [1, 1] & [14, 12] & [13, 7] & 267\\
+\hline
+267  & [13, 7] & [8, 15] & [14, 12] & 292\\
+\hline
+346  & [17, 6] & [4, 18] & [17, 6] & 346\\
+\hline
+292  & [14, 12] & [19, 19] & [19, 19] & 399\\
+\hline
+
+\end{tabular}
+\end{center}
+
+
+
 \newpage
 
 
