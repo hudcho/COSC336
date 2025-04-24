@@ -110,7 +110,7 @@ All these can be deleted, but do not delete lecture1.tex.
     \begin{flushleft}
         Hudson Cho, Ryan Wilson, Jesse Washburn, Colin Shuster, Samhith Patibandla\\  % authors' names
         COSC 336 \\  %class
-        04/20/2025\\  % date
+        04/24/2025\\  % date
     \end{flushleft}
 \center{\Large{\textbf{Assignment 7}}}
 } % end vbox
@@ -190,201 +190,206 @@ To append in the  latex file a .jpg file (for a photo), use
 
 
 %%%%%%%%%%%%%%
-
-\textbf{Exercise 1.} Show similarly to Fig 8.3 on page 212 in the textbook, how \textsf{RadixSort} sorts the following arrays:
+\textbf{Exercise 1.} Show similarly to Fig.\,8.3 on page 212 in the textbook, how \textsf{RadixSort} sorts the following arrays:
 
 \begin{enumerate}
 
 \item 34, 9134, 20134, 29134, 4, 134
 
-
 \begin{center}
-\begin{tabular}{|c c c c c c |} 
+\begin{tabular}{|c c c c c c|}
  \hline
- Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ Input     & Ones      & Tens      & Hundreds  & Thousands  & Ten-Thousand \\
  \hline\hline
- 00034 & - & 00004 & - &   00004 &  00004 \\ 
-\hline
- 09134 & - & 00034 &  - & 00034 & 00034\\ 
+ 00034 & 00034 & 00004 & 00004 & 00004 & 00004 \\
+ 09134 & 09134 & 00034 & 00034 & 00034 & 00034 \\
+ 20134 & 20134 & 09134 & 09134 & 20134 & 00134 \\
+ 29134 & 29134 & 20134 & 20134 & 00134 & 09134 \\
+ 00004 & 00004 & 29134 & 29134 & 09134 & 20134 \\
+ 00134 & 00134 & 00134 & 00134 & 29134 & 29134 \\
  \hline
- 20134 & - & 09134  & - & 20134 & 00134 \\ 
- \hline
- 29134 & - & 20134  & - &  00134 & 09134  \\ 
- \hline
- 00004 & - & 29134 &  - & 09134 &  20134  \\ 
-  \hline
-  00134 & - & 00134  &  - &  29134 &  29134\\ 
-  \hline
 \end{tabular}
 \end{center}
-
 
 \item 4, 34, 134, 9134, 20134, 29134
 
-
 \begin{center}
-    
-\begin{tabular}{|c c c c c c |} 
+\begin{tabular}{|c c c c c c|}
  \hline
- Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ Input     & Ones      & Tens      & Hundreds  & Thousands  & Ten-Thousand \\
  \hline\hline
- 00004 & - & - & - &    00004 &  00004  \\ 
-\hline
- 00034 & - & - &  - & 00034 & 00034 \\ 
+ 00004 & 00004 & 00004 & 00004 & 00004 & 00004 \\
+ 00034 & 00034 & 00034 & 00034 & 00034 & 00034 \\
+ 00134 & 00134 & 00134 & 00134 & 00134 & 00134 \\
+ 09134 & 09134 & 09134 & 09134 & 20134 & 09134 \\
+ 20134 & 20134 & 20134 & 20134 & 09134 & 20134 \\
+ 29134 & 29134 & 29134 & 29134 & 29134 & 29134 \\
  \hline
- 00134  & - & -  & - &  00134  &  00134  \\ 
- \hline
- 09134 & - & -  & - &  20134 & 09134 \\ 
- \hline
- 20134 & - & - &  - & 09134 &  20134  \\ 
-  \hline
-  29134 & - & -  &  - &  29134 &  29134 \\ 
-  \hline
 \end{tabular}
 \end{center}
-
 
 \item 29134, 20134, 9134, 134, 34, 4
 
 \begin{center}
-    
-\begin{tabular}{|c c c c c c |} 
+\begin{tabular}{|c c c c c c|}
  \hline
- Input & Ones & Tens & Hundreds & Thousands & Ten-Thousand \\ 
+ Input     & Ones      & Tens      & Hundreds  & Thousands  & Ten-Thousand \\
  \hline\hline
- 29134 & - & 00004 & 00004 &    00004 &  00004  \\ 
-\hline
- 20134 & - &29134 &   00034 & 00034 & 00034 \\ 
+ 29134 & 29134 & 00004 & 00004 & 00004 & 00004 \\
+ 20134 & 20134 & 29134 & 00034 & 00034 & 00034 \\
+ 09134 & 09134 & 20134 & 29134 & 20134 & 00134 \\
+ 00134 & 00134 & 09134 & 20134 & 00134 & 09134 \\
+ 00034 & 00034 & 00134 & 09134 & 29134 & 20134 \\
+ 00004 & 00004 & 00034 & 00134 & 09134 & 29134 \\
  \hline
- 09134  & - & 20134  &29134 &  20134  &  00134  \\ 
- \hline
- 00134 & - & 09134   & 20134&  00134 & 09134 \\ 
- \hline
- 00034 & - & 00134& 09134  & 29134 &  20134  \\ 
-  \hline
-  00004 & - &  00034  & 00134 &  09134 &  29134 \\ 
-  \hline
 \end{tabular}
 \end{center}
 
 \end{enumerate}
+\textbf{Exercise 2.} Present an $O(n)$ algorithm that sorts $n$ positive integer numbers $a_1,a_2,\ldots,a_n$ which are known to be bounded by $n^2-1$ (so $0\le a_i\le n^2-1$ for every $i=1,\ldots,n$).  Use the idea of Radix Sort (discussed in class and presented in Section~8.3 of the textbook).
 
-\textbf{Exercise 2.} Present an $O(n)$ algorithm that sorts $n$ positive integer numbers  $a_1, a_2, \ldots, a_n$ which are known to be bounded by $n^2-1$ (so $0 \leq a_i \leq n^2-1$, for every $i=1, \ldots, n$. Use the idea of Radix Sort  (discussed in class and presented in Section 8.3 in the textbook).
+Note that in order to obtain $O(n)$ you must write the numbers in a suitable base.  Recall that the runtime of Radix Sort is $O(d\,(n+k))$, where $d$ is the number of digits and $k$ is the base.  The idea is to choose a base $k$ so that each number in $\{0,1,\ldots,n^2-1\}$ requires only $2$ “digits,” i.e.\ $d=2$.  Explain which base you choose and how you compute the two digits of each number (i.e.\ how you convert from base 10 to base $k$).  Note that you cannot use base 10, since $n^2-1$ would then require $\log_{10}(n^2-1)$ digits, which is not constant.  By the same reasoning no constant base $k$ works, so $k$ must depend on $n$.  Give the formula for $k$ in terms of $n$ and show that $d=2$ digits suffice to represent all numbers in $\{0,1,\ldots,n^2-1\}$.
 
-Note that in order to obtain $O(n)$ you have to do Radix Sort by writing the numbers in a suitable base.  Recall that the runtime of Radix Sort is $O(d (n+k))$, where $d$ is the number of digits, and $k$ is the base, so that the number of digits in the base is also $k$. The idea is to represent each number in a base $k$ chosen so that  each number in $\{0,1, \ldots, n^2-1\}$  requires only $2$ ``digits," so $d=2$.   Explain what is the base that you choose and  how the digits of each number are calculated, in other words how you convert from base 10 to the base.  Note that you cannot use the base 10 representation, because $n^2-1$ (which is the largest possible value) requires $\log_{10} (n^2-1)$ digits in base $10$, which is obviously not constant and therefore you would not obtain an $O(n)$-time algorithm.   By the same argument we see that no base $k$ that is constant works, therefore $k$ has to depend on $n$.   In your explanations you need to indicate the formula that gives $k$ as a function of $n$, and show that $d=2$ ``digits'' are enough to represent all the numbers in the range $\{0,1, \ldots, n^2-1\}$.
+Illustrate your algorithm by mimicking Fig.~8.3 (p.~198) and showing how it sorts the following two sequences (clearly label your columns):
 
-Illustrate your algorithm by showing on paper similar to Fig. 8.3, page 198 in the textbook (make sure you indicate clearly the columns)  how the algorithm sorts the following 2 sequences: 
+\smallskip
+(a) 45, 98, 3, 82, 132, 71, 72, 143, 91, 28, 7, 45.  
+In this example $n=12$, since there are 12 numbers bounded by $143 = 12^2-1$.  
 \smallskip
 
-(a) 45, 98, 3, 82, 132, 71, 72, 143, 91, 28, 7, 45.
+(b) 45, 98, 3, 82, 132, 71, 72, 143, 91, 28, 7, 45, 151, 175, 145, 399, 21, 267, 346, 292.  
+Here $n=20$, since there are 20 numbers bounded by $399 = 20^2-1$.  
 
-In this example $n=12$, because there are $12$ positive numbers in the sequence bounded by $143 = 12^2 - 1$. 
-\smallskip
+\bigskip
+Note:  If $b>10$, you may use the symbols $0,1,\ldots,b-1$ (written in base 10) as your “digits.”  For example, in base 25 the two-digit number $(9,23)$ represents $9\cdot25 + 23 = 248$.
 
-(b) 45, 98, 3, 82, 132, 71, 72, 143, 91, 28, 7, 45, 151, 175, 145, 399, 21, 267, 346, 292.
+\bigskip
+\textbf{Solution:}
 
-In this 2-nd example $n=20$, because there are $20$ positive numbers in the sequence bounded by $399= 20^2 - 1$. 
+To obtain $O(n)$ we use a 2-digit Radix Sort in base $k$.  Radix Sort runs in
+\[
+  O\bigl(d\,(n+k)\bigr),
+\]
+where
+\begin{itemize}
+  \item $d$ is the number of digits,
+  \item $n$ is the number of inputs,
+  \item $k$ is the base.
+\end{itemize}
+We fix $d=2$, so we require
+\[
+  k^2 - 1 \;\ge\; n^2 - 1
+  \quad\Longrightarrow\quad
+  k \;\ge\; n.
+\]
+Thus choose
+\[
+  k \;=\; n.
+\]
+Every input $a$ is then written in base $n$ by
+\[
+  a = q\cdot n + r,
+  \quad
+  0 \;\le\; r < n,
+\]
+so the two base-$n$ digits are
+\[
+  \text{LSB} = r = a \bmod n,
+  \quad
+  \text{MSB} = q = \bigl\lfloor a/n \bigr\rfloor.
+\]
+Since $d=2$ and $k=n$, the total runtime is
+\[
+  O\bigl(2\,(n + n)\bigr)
+  \;=\;
+  O(4n)
+  \;=\;
+  O(n).
+\]
+
+\newpage
+
+\begin{center}
+\begin{tabular}{|p{6em}|p{6em}|p{6em}|p{6em}|p{6em}|}
+\hline
+\textbf{Input} & \textbf{Base 12} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted back to base 10}\\
+\hline
+45   & $[3,9]$    & $[11,0]$  & $[0,3]$    & 3   \\
+\hline
+98   & $[8,2]$    & $[6,0]$   & $[0,7]$    & 7   \\
+\hline
+3    & $[0,3]$    & $[8,2]$   & $[2,4]$    & 28  \\
+\hline
+82   & $[6,10]$   & $[0,3]$   & $[3,9]$    & 45  \\
+\hline
+132  & $[11,0]$   & $[2,4]$   & $[3,9]$    & 45  \\
+\hline
+71   & $[5,11]$   & $[0,7]$   & $[5,11]$   & 71  \\
+\hline
+72   & $[6,0]$    & $[7,7]$   & $[6,0]$    & 72  \\
+\hline
+143  & $[11,11]$  & $[3,9]$   & $[6,10]$   & 82  \\
+\hline
+91   & $[7,7]$    & $[3,9]$   & $[7,7]$    & 91  \\
+\hline
+28   & $[2,4]$    & $[6,10]$  & $[8,2]$    & 98  \\
+\hline
+7    & $[0,7]$    & $[5,11]$  & $[11,0]$   & 132 \\
+\hline
+45   & $[3,9]$    & $[11,11]$ & $[11,11]$  & 143 \\
+\hline
+\end{tabular}
+\end{center}
+
 \bigskip
 
-Note: if you use a base $b$ bigger than 10, you do not need to invent symbols for the digits larger than 10; instead use as digits the numbers $0,1, \ldots, b-1$ represented in base 10. For instance if you use base, say 25, the digits will be: 0,1, \ldots, 9, 10, 11, \ldots, 23, 24. So  we view `10', `11', etc., as a single symbol. For instance in this representation the number 9 23 written in base 25 has 2 digits: 9 and 23. 
-
-\medbreak
-\textbf{Solution:}
-To obtain an algorithm that runs in $O(n)$ we will use a modified radix sort. Since radix sort runs in $O(d(n+k))$ where: 
-\begin{itemize}
-        \item \textit{d} is the number of digits,
-    \item \textit{n} is the number of input values, and
-    \item \textit{k} is the base of the numbers.
-\end{itemize}
-    In this case we want to keep \textit{d} constant, so if we choose a base \textit{k} such that every input value can be represented with 2 digits in base \textit{k} then we have $d = 2$. The the largest number we can represent in base \textit{k} is $k^2-1$ (since the total number of 2-digit numbers in base \textit{k} is $k^2$, with all of them being in the range of $0 \text{ to } k^2-1$)$.
-
-    Additionally, we are told that the numbers have an upper bound of $n^2-1$. Using this we must make sure that whatever base we choose can represent\textemdash in 2 digits\textemdash a number as big as $n^2-1$. This gives us the inequality $k^2-1\geq n^2-1$. Solving this gives us $k\geq n$, so to keep things simple we will choose our base $k = n$. In other words if the input is of size $n=12$, we will rewrite the input values in base 12 and then run radix sort. Since \textit{d} is constant and since $k = n$ our runtime is $O(2(n+n) \rightarrow O(4n) \rightarrow O(n)$.
-
-\pagebreak
-
 \begin{center}
-\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|p{7em}|} 
+\begin{tabular}{|p{6em}|p{6em}|p{6em}|p{6em}|p{6em}|}
 \hline
-\textbf{Input} & \textbf{Converted to base 12} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted to base 10} \\ 
+\textbf{Input} & \textbf{Base 20} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted back to base 10}\\
 \hline
-45 & [3,9]  & [11,0]  & [0,3]    & 3   \\
+45   & $[2,5]$     & $[1,1]$   & $[0,3]$    & 3   \\
 \hline
-98 & [8,2]  & [6,0]   & [0,7]    & 7   \\
+98   & $[4,18]$    & $[4,2]$   & $[0,7]$    & 7   \\
 \hline
-3  & [0,3]  & [8,2]   & [2,4]    & 28  \\
+3    & $[0,3]$     & $[0,3]$   & $[1,1]$    & 21  \\
 \hline
-82 & [6,10] & [0,3]   & [3,9]    & 45  \\
+82   & $[4,2]$     & $[7,3]$   & $[1,8]$    & 28  \\
 \hline
-132& [11,0] & [2,4]   & [3,9]    & 45  \\
+132  & $[6,12]$    & $[2,5]$   & $[2,5]$    & 45  \\
 \hline
-71 & [5,11] & [0,7]   & [5,11]   & 71  \\
+71   & $[3,11]$    & $[2,5]$   & $[2,5]$    & 45  \\
 \hline
-72 & [6,0]  & [7,7]   & [6,0]    & 72  \\
+72   & $[3,12]$    & $[7,5]$   & $[3,11]$   & 71  \\
 \hline
-143& [11,11]& [3,9]   & [6,10]   & 82  \\
+143  & $[7,3]$     & $[17,6]$  & $[3,12]$   & 72  \\
 \hline
-91 & [7,7]  & [3,9]   & [7,7]    & 91  \\
+91   & $[4,11]$    & $[0,7]$   & $[4,2]$    & 82  \\
 \hline
-28 & [2,4]  & [6,10]  & [8,2]    & 98  \\
+28   & $[1,8]$     & $[13,7]$  & $[4,11]$   & 91  \\
 \hline
-7  & [0,7]  & [5,11]  & [11,0]   & 132 \\
+7    & $[0,7]$     & $[1,8]$   & $[4,18]$   & 98  \\
 \hline
-45 & [3,9]  & [11,11] & [11,11]  & 143 \\
+45   & $[2,5]$     & $[3,11]$  & $[6,12]$   & 132 \\
+\hline
+151  & $[7,11]$    & $[4,11]$  & $[7,3]$    & 143 \\
+\hline
+175  & $[8,15]$    & $[7,11]$  & $[7,5]$    & 145 \\
+\hline
+145  & $[7,5]$     & $[6,12]$  & $[7,11]$   & 151 \\
+\hline
+399  & $[19,19]$   & $[3,12]$  & $[8,15]$   & 175 \\
+\hline
+21   & $[1,1]$     & $[14,12]$ & $[13,7]$   & 267 \\
+\hline
+267  & $[13,7]$    & $[8,15]$  & $[14,12]$  & 292 \\
+\hline
+346  & $[17,6]$    & $[4,18]$  & $[17,6]$   & 346 \\
+\hline
+292  & $[14,12]$   & $[19,19]$ & $[19,19]$  & 399 \\
 \hline
 \end{tabular}
 \end{center}
-
-
-\begin{center}
-\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|p{7em}|} 
-\hline
-\textbf{Input} & \textbf{Converted to base 20} & \textbf{1st pass (LSB)} & \textbf{2nd pass (MSB)} & \textbf{Converted to base 10} \\ 
-
-\hline
-45   & [2, 5] & [1, 1] & [0, 3] & 3 \\
-\hline
-98   & [4, 18] & [4, 2] & [0, 7] & 7\\
-\hline
-3    & [0, 3] & [0, 3] & [1, 1] & 21\\
-\hline
-82   & [4, 2] & [7, 3] & [1, 8] & 28\\
-\hline
-132  & [6, 12] & [2, 5] & [2, 5] & 45\\
-\hline
-71   & [3, 11] & [2, 5] & [2, 5] & 45\\
-\hline
-72   & [3, 12] & [7, 5] & [3, 11] & 71 \\
-\hline
-143  & [7, 3] & [17, 6] & [3, 12] & 72\\
-\hline
-91   & [4, 11] & [0, 7] & [4, 2] & 82\\
-\hline
-28   & [1, 8] & [13, 7] & [4, 11] & 91 \\
-\hline
-7    & [0, 7] & [1, 8] & [4, 18] & 98\\
-\hline
-45   & [2, 5] & [3, 11] & [6, 12] & 132\\
-\hline
-151  & [7, 11] & [4, 11] & [7, 3] & 143\\
-\hline
-175  & [8, 15] & [7, 11] & [7, 5] & 145\\
-\hline
-145  & [7, 5] & [6, 12] & [7, 11] & 151\\
-\hline
-399  & [19, 19] & [3, 12] & [8, 15] & 175\\
-\hline
-21   & [1, 1] & [14, 12] & [13, 7] & 267\\
-\hline
-267  & [13, 7] & [8, 15] & [14, 12] & 292\\
-\hline
-346  & [17, 6] & [4, 18] & [17, 6] & 346\\
-\hline
-292  & [14, 12] & [19, 19] & [19, 19] & 399\\
-\hline
-
-\end{tabular}
-\end{center}
-
 
 
 \newpage
@@ -525,6 +530,7 @@ This program reads a directed graph from a text file containing a flattened adja
     showstringspaces=false
 }
 \begin{lstlisting}[language=Java]
+//Adj_List_Graph.java
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -562,6 +568,7 @@ public Adj_List_Graph graphSquared() {
       // Use a Set to collect unique neighbors reachable in <=2 steps
       java.util.Set<Integer> uniqueNeighbors = new java.util.HashSet<>();
 
+      // Initialize path lengths
       for (int k = 0; k < n; k++) {
          pathLength[k] = -1;
       }
@@ -570,18 +577,24 @@ public Adj_List_Graph graphSquared() {
       while (!pathNext.isEmpty()) {
          int fromNode = pathNext.removeFirst();
 
+         // Only continue BFS if current depth < 2
          if (pathLength[fromNode] < 2) {
             for (int j = 0; j < adj.get(fromNode).size(); j++) {
                int toNode = adj.get(fromNode).get(j);
+               int nextLength = pathLength[fromNode] + 1;
 
-               if (pathLength[toNode] == -1) {
-                  pathLength[toNode] = pathLength[fromNode] + 1;
-                  pathNext.addLast(toNode);
-               }
+               // Only proceed if within depth 2
+               if (nextLength <= 2) {
+                  // If first time visiting, mark path length and queue for next step
+                  if (pathLength[toNode] == -1) {
+                     pathLength[toNode] = nextLength;
+                     pathNext.addLast(toNode);
+                  }
 
-               // Regardless of visitation, add if within 2 steps
-               if (pathLength[fromNode] + 1 <= 2) {
-                  uniqueNeighbors.add(toNode);
+                  // Only add to result if not already present
+                  if (!uniqueNeighbors.contains(toNode)) {
+                     uniqueNeighbors.add(toNode);
+                  }
                }
             }
          }
@@ -594,6 +607,7 @@ public Adj_List_Graph graphSquared() {
    }
    return squareGraph;
 }
+
 
    public void addEdge(int u, int v) {
       adj.get(u).add(v);
@@ -629,7 +643,6 @@ public Adj_List_Graph graphSquared() {
             System.out.print("Input File Name : ");
             userVar = scnr.next();
          }
-         // System.out.println();
          Scanner scnrX = new Scanner(new File(userVar));
 
          int n = scnrX.nextInt();
@@ -653,6 +666,7 @@ public Adj_List_Graph graphSquared() {
       }
    }
 }
+
 \end{lstlisting}
 
 \section*{Raw Code for Test\_Adj.java (Driver)}
