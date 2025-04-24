@@ -35,6 +35,7 @@ public Adj_List_Graph graphSquared() {
       // Use a Set to collect unique neighbors reachable in <=2 steps
       java.util.Set<Integer> uniqueNeighbors = new java.util.HashSet<>();
 
+      // Initialize path lengths
       for (int k = 0; k < n; k++) {
          pathLength[k] = -1;
       }
@@ -43,18 +44,24 @@ public Adj_List_Graph graphSquared() {
       while (!pathNext.isEmpty()) {
          int fromNode = pathNext.removeFirst();
 
+         // Only continue BFS if current depth < 2
          if (pathLength[fromNode] < 2) {
             for (int j = 0; j < adj.get(fromNode).size(); j++) {
                int toNode = adj.get(fromNode).get(j);
+               int nextLength = pathLength[fromNode] + 1;
 
-               if (pathLength[toNode] == -1) {
-                  pathLength[toNode] = pathLength[fromNode] + 1;
-                  pathNext.addLast(toNode);
-               }
+               // Only proceed if within depth 2
+               if (nextLength <= 2) {
+                  // If first time visiting, mark path length and queue for next step
+                  if (pathLength[toNode] == -1) {
+                     pathLength[toNode] = nextLength;
+                     pathNext.addLast(toNode);
+                  }
 
-               // Regardless of visitation, add if within 2 steps
-               if (pathLength[fromNode] + 1 <= 2) {
-                  uniqueNeighbors.add(toNode);
+                  // Only add to result if not already present
+                  if (!uniqueNeighbors.contains(toNode)) {
+                     uniqueNeighbors.add(toNode);
+                  }
                }
             }
          }
@@ -67,6 +74,7 @@ public Adj_List_Graph graphSquared() {
    }
    return squareGraph;
 }
+
 
    public void addEdge(int u, int v) {
       adj.get(u).add(v);
@@ -102,7 +110,6 @@ public Adj_List_Graph graphSquared() {
             System.out.print("Input File Name : ");
             userVar = scnr.next();
          }
-         // System.out.println();
          Scanner scnrX = new Scanner(new File(userVar));
 
          int n = scnrX.nextInt();
