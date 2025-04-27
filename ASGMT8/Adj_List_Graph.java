@@ -23,7 +23,7 @@ import java.io.*;
     public void addEdge(int u, int v)
     {
       adj.get(u).add(v);
-      // adj.get(v).add(u);  //this line should be un-commented, if graph is undirected
+      adj.get(v).add(u);  //this line should be un-commented, if graph is undirected
     }
     
     // A utility function to print the adjacency list
