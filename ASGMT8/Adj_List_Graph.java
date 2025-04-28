@@ -32,17 +32,17 @@ public class Adj_List_Graph {
 
       for (int k = 0; k < n; k++) {
          prev[k] = new LinkedList<Integer>();
-         nPaths[k] = -1;
+         nPaths[k] = 0;
          knownDistance[k] = (int) Integer.MAX_VALUE;
          traveled[k] = false;
       }
 
       knownDistance[start] = 0;
-      nPaths[start] = 0;
+      nPaths[start] = 1;
       paths_insertionSorted.add(start);
 
+      System.out.println("");
 
-      //BFS with a prev[] : LinkedList Array to track all current backpaths with same distance...
       while (!paths_insertionSorted.isEmpty() && traveled[end] == false) {
 
          int currParent = paths_insertionSorted.removeFirst();
@@ -51,14 +51,14 @@ public class Adj_List_Graph {
          for (Integer c : adj.get(currParent)) {
 
             if (knownDistance[c] == knownDistance[currParent] + 1) {
-               //Node.c is a 'peer' to curr best paths//
-               nPaths[c] += 1;
+               // Node.c is a 'peer' to curr best paths//
+               nPaths[c] = nPaths[currParent] + nPaths[c];
 
                prev[c].add(currParent);
-            
+
             } else if (knownDistance[c] > knownDistance[currParent] + 1) {
-               //Node.c is a best found path or first visit//
-               nPaths[c] = 1;
+               // Node.c is a best found path or first visit//
+               nPaths[c] = nPaths[currParent];
 
                knownDistance[c] = knownDistance[currParent] + 1;
                paths_insertionSorted = insertInOrder(paths_insertionSorted, knownDistance, c);
@@ -69,40 +69,46 @@ public class Adj_List_Graph {
             }
 
          }
+
       }
 
-      //Direct print Info...
+      // Direct print Info...
       System.out.println("\n\nKnown Distance from " + start + " to " + end + " : " + knownDistance[end] + "");
-      System.out.println("Known nPaths that distance = " + nPaths[end]);
-      System.out.println();
-      //Direct print Info...
+      System.out.println("Known paths that distance = " + nPaths[end]);
+      System.out.print("\nDistances[] = ");
+      for(int k: knownDistance){
+         System.out.print(k+" ");
+      }
+      System.out.print("\nNpaths[] = ");
+      for(int k: nPaths){
+         System.out.print(k+" ");
+      }
+      System.out.println("");
+      // Direct print Info...
 
-
-      //[START] - Reconstructing a printable array using a backwards BFS using prev[ |V| ] & knownDistance[ |V| ]//
-      int[][] pathsToEnd = new int[nPaths[end]][knownDistance[end] + 1]; 
-      LinkedList<Integer> currChildren = new LinkedList<Integer>();
-      currChildren.add(end);
-      int curr = end;
+      //BFS ON PREV[] TO PRINT PATHS...
+      int[][] pathsToEnd = new int[nPaths[end]][knownDistance[end]+1];
+      LinkedList<Integer> queBFS = new LinkedList<>();
+      queBFS.add(end);
       int row = 0;
-      
-      while(curr!=start){
-         curr = currChildren.removeFirst();
-         for(Integer k: prev[curr]){
-            currChildren.add(k);
-         }
-         int col = knownDistance[curr];
-         for(int j=nPaths[curr]; j>0; j--){
-            pathsToEnd[row][col] = curr;
+      while (!queBFS.isEmpty()) {
+         int curr = queBFS.removeFirst();
+         for (int k : prev[curr]) {
+
+            for(int f=nPaths[k]; f>0; f--){
+            //copy curr npaths[k] times into array//
+            pathsToEnd[row][knownDistance[curr]]= curr;
             row++;
-         }
-         if(nPaths[end]-row == 0){
-            row = 0;
+            }
+            if(row == pathsToEnd.length){
+               row = 0;
+            }
+            queBFS.addLast(k);
          }
       }
-      //[END] - Reconstructing a printable array using a backwards BFS using prev[ |V| ] & knownDistance[ |V| ]//
-      
+      //BFS ON PREV[] TO PRINT PATHS...
 
-      //Direct printing paths...
+      System.out.println("");
       for(int i = 0; i < pathsToEnd.length; i++) {
          for (int k = 0; k < pathsToEnd[i].length; k++) {
             if (k == 0) {
@@ -113,7 +119,6 @@ public class Adj_List_Graph {
          }
          System.out.println("");
       }
-      //Direct printing paths...
 
    }
 
