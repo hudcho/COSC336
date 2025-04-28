@@ -47,27 +47,30 @@ public class Adj_List_Graph {
 
          int currParent = paths_insertionSorted.removeFirst();
          traveled[currParent] = true;
+         
+         if (currParent != end) {
 
-         for (Integer c : adj.get(currParent)) {
+            for (Integer c : adj.get(currParent)) {
 
-            if (knownDistance[c] == knownDistance[currParent] + 1) {
-               // Node.c is a 'peer' to curr best paths//
-               nPaths[c] = nPaths[currParent] + nPaths[c];
+               if (knownDistance[c] == knownDistance[currParent] + 1) {
+                  // Node.c is a 'peer' to curr best paths//
+                  nPaths[c] = nPaths[currParent] + nPaths[c];
 
-               prev[c].add(currParent);
+                  prev[c].add(currParent);
 
-            } else if (knownDistance[c] > knownDistance[currParent] + 1) {
-               // Node.c is a best found path or first visit//
-               nPaths[c] = nPaths[currParent];
+               } else if (knownDistance[c] > knownDistance[currParent] + 1) {
+                  // Node.c is a best found path or first visit//
+                  nPaths[c] = nPaths[currParent];
 
-               knownDistance[c] = knownDistance[currParent] + 1;
-               paths_insertionSorted = insertInOrder(paths_insertionSorted, knownDistance, c);
+                  knownDistance[c] = knownDistance[currParent] + 1;
+                  paths_insertionSorted = insertInOrder(paths_insertionSorted, knownDistance, c);
 
-               prev[c].clear();
-               prev[c].add(currParent);
+                  prev[c].clear();
+                  prev[c].add(currParent);
+
+               }
 
             }
-
          }
 
       }
@@ -77,7 +80,10 @@ public class Adj_List_Graph {
       System.out.println("Known paths that distance = " + nPaths[end]);
       System.out.print("\nDistances[] = ");
       for (int k : knownDistance) {
-         System.out.print(k + " ");
+         if (k < Integer.MAX_VALUE) {
+            System.out.print(k + " ");
+         }
+
       }
       System.out.print("\nNpaths[] = ");
       for (int k : nPaths) {
@@ -113,7 +119,7 @@ public class Adj_List_Graph {
    }
 
    private static void printArray(int[][] graphEX) {
-      
+
       System.out.println("");
       for (int i = 0; i < graphEX.length; i++) {
          for (int k = 0; k < graphEX[i].length; k++) {
