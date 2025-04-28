@@ -73,21 +73,21 @@ public class Adj_List_Graph {
       }
 
       // Direct print Info...
-      System.out.println("\n\nKnown Distance from " + start + " to " + end + " : " + knownDistance[end] + "");
+      System.out.println("\nKnown Distance from " + start + " to " + end + " : " + knownDistance[end] + "");
       System.out.println("Known paths that distance = " + nPaths[end]);
       System.out.print("\nDistances[] = ");
-      for(int k: knownDistance){
-         System.out.print(k+" ");
+      for (int k : knownDistance) {
+         System.out.print(k + " ");
       }
       System.out.print("\nNpaths[] = ");
-      for(int k: nPaths){
-         System.out.print(k+" ");
+      for (int k : nPaths) {
+         System.out.print(k + " ");
       }
       System.out.println("");
       // Direct print Info...
 
-      //BFS ON PREV[] TO PRINT PATHS...
-      int[][] pathsToEnd = new int[nPaths[end]][knownDistance[end]+1];
+      // BFS ON PREV[] TO PRINT PATHS...
+      int[][] pathsToEnd = new int[nPaths[end]][knownDistance[end] + 1];
       LinkedList<Integer> queBFS = new LinkedList<>();
       queBFS.add(end);
       int row = 0;
@@ -95,26 +95,32 @@ public class Adj_List_Graph {
          int curr = queBFS.removeFirst();
          for (int k : prev[curr]) {
 
-            for(int f=nPaths[k]; f>0; f--){
-            //copy curr npaths[k] times into array//
-            pathsToEnd[row][knownDistance[curr]]= curr;
-            row++;
+            for (int f = nPaths[k]; f > 0; f--) {
+               // copy curr npaths[k] times into array//
+               pathsToEnd[row][knownDistance[curr]] = curr;
+               row++;
             }
-            if(row == pathsToEnd.length){
+            if (row == pathsToEnd.length) {
                row = 0;
             }
             queBFS.addLast(k);
          }
       }
-      //BFS ON PREV[] TO PRINT PATHS...
+      // BFS ON PREV[] TO PRINT PATHS...
+
+      printArray(pathsToEnd);
+
+   }
+
+   private static void printArray(int[][] graphEX) {
 
       System.out.println("");
-      for(int i = 0; i < pathsToEnd.length; i++) {
-         for (int k = 0; k < pathsToEnd[i].length; k++) {
+      for (int i = 0; i < graphEX.length; i++) {
+         for (int k = 0; k < graphEX[i].length; k++) {
             if (k == 0) {
-               System.out.print("" + pathsToEnd[i][k]);
+               System.out.print("" + graphEX[i][k]);
             } else {
-               System.out.print("-" + pathsToEnd[i][k]);
+               System.out.print("-" + graphEX[i][k]);
             }
          }
          System.out.println("");
