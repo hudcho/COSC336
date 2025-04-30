@@ -21,6 +21,9 @@ public class Adj_List_Graph {
    }
 
    public void shortestPath(int start, int end) {
+      // Called using indexing nodes labeled [0, 1, 2, (n-1)] 
+      // Lab spec [ 1,2,3,...,n ] : Fixed on lines with comment 
+      // '// FIXs print VALUES'
 
       LinkedList<Integer> bfs_Paths = new LinkedList<>();
 
@@ -47,8 +50,8 @@ public class Adj_List_Graph {
 
          int currParent = bfs_Paths.removeFirst();
          traveled[currParent] = true;
-         
-         //All shortest paths to curr are found...
+
+         // All shortest paths to curr are found...
          if (currParent != end) {
             // iff (curr == end) Break ==> shortest path to curr is known//
 
@@ -84,9 +87,8 @@ public class Adj_List_Graph {
       for (int k : distance) {
          if (k < Integer.MAX_VALUE) {
             System.out.print(k + " ");
-         }
-         else{
-            System.out.println(" - ");
+         } else {
+            System.out.print(" - ");
          }
 
       }
@@ -100,39 +102,34 @@ public class Adj_List_Graph {
 
       // BFS ON PREV[] TO PRINT PATHS...
       int[][] pathsToEnd = new int[nPaths[end]][distance[end] + 1];
-
       LinkedList<Integer> queBFS = new LinkedList<>();
       queBFS.add(end);
-
       int row = 0;
       while (!queBFS.isEmpty()) {
-
          int curr = queBFS.removeFirst();
 
          for (int k : prev[curr]) {
-
             for (int f = nPaths[k]; f > 0; f--) {
-               // copy curr npaths[k] times into array bc 
-               // summ of all nPaths[ prev[curr].List ] 
-               // equals nPaths[curr]//
-               pathsToEnd[row][distance[curr]] = curr;
-               row++;
-            }
+               // curr is a parent on path with a previous node//
+               pathsToEnd[row][distance[curr]] = curr + 1; // FIXs print VALUES
 
+               if (k == start) { // start doesnt have prev nodes //
+                  pathsToEnd[row][distance[curr] - 1] = k + 1; // FIXs print VALUES
+               }
+
+               row++;
+
+            }
             if (row == pathsToEnd.length) {
                row = 0;
             }
-            //Works as all paths are equal distance//
-
             queBFS.addLast(k);
-
          }
 
       }
       // BFS ON PREV[] TO PRINT PATHS...
 
       printArray(pathsToEnd);
-
    }
 
    private static void printArray(int[][] graphEX) {
@@ -153,17 +150,23 @@ public class Adj_List_Graph {
 
    public void addEdge(int u, int v) {
       adj.get(u).add(v);
-      adj.get(v).add(u); // this line should be un-commented, if graph is undirected
+      adj.get(v).add(u); // graph is undirected
    }
 
+   // FIX print VALUES +1 Lab Index [ 1, 2, ... ,n ]
    public void printGraph() {
       for (int i = 0; i < n; i++) {
 
-         System.out.print("\nAdjacency list of vertex " + i + "  :  ");
+         int node = i + 1; // FIX print VALUES
+
+         System.out.print("\nAdjacency list of vertex " + node + "  :  ");
          System.out.print("head");
 
          for (int j = 0; j < adj.get(i).size(); j++) {
-            System.out.print(" -> " + adj.get(i).get(j));
+
+            node = adj.get(i).get(j) + 1; // FIX print VALUES
+            System.out.print(" -> " + node); // FIX print VALUES
+
          }
          // System.out.println();
       }
@@ -181,7 +184,6 @@ public class Adj_List_Graph {
             System.out.print("Input File Name : ");
             userVar = scnr.next();
          }
-         //scnr.close();
          Scanner scnrX = new Scanner(new File(userVar));
 
          int n = scnrX.nextInt();
@@ -198,8 +200,6 @@ public class Adj_List_Graph {
             }
             k++;
          }
-
-         //scnrX.close();
          return x;
       } catch (FileNotFoundException e) {
          System.out.println("Error File Not Found...");
