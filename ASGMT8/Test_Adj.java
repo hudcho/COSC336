@@ -7,8 +7,14 @@ public class Test_Adj {
       Adj_List_Graph k = Adj_List_Graph.file_Intake();
       k.printGraph();
 
-      //k.shortestPath(0, 6);
-      k.shortestPath(0, 9);
+      k.shortestPath(0, 6);
+
+      System.out.println("");
+
+      Adj_List_Graph f = Adj_List_Graph.file_Intake();
+      f.printGraph();
+
+      f.shortestPath(0, 9);
 
    }
 }
@@ -29,11 +35,10 @@ Known paths that distance = 3
 Distances[] = 0 1 1 1 2 2 3
 Npaths[] = 1 1 1 1 2 1 3
 
-0-2-4-6
 0-1-4-6
+0-2-4-6
 0-3-5-6
-*/
-/*
+
 Input File Name : input-8-2.txt
 
 Adjacency list of vertex 0  :  head -> 1 -> 2 -> 3 -> 4 -> 5
@@ -53,14 +58,14 @@ Known paths that distance = 10
 Distances[] = 0 1 1 1 1 1 2 3 3 4
 Npaths[] = 1 1 1 1 1 1 5 5 5 10
 
-0-5-6-8-9
-0-4-6-8-9
-0-3-6-8-9
-0-2-6-8-9
-0-1-6-8-9
-0-5-6-7-9
-0-4-6-7-9
-0-3-6-7-9
-0-2-6-7-9
 0-1-6-7-9
+0-2-6-7-9
+0-3-6-7-9
+0-4-6-7-9
+0-5-6-7-9
+0-1-6-8-9
+0-2-6-8-9
+0-3-6-8-9
+0-4-6-8-9
+0-5-6-8-9
 */
