@@ -28,7 +28,7 @@ public class Test_Adj {
    Adjacency list of vertex 6  :  head -> 4 -> 5 -> 7
    Adjacency list of vertex 7  :  head -> 5 -> 6
 
-   Known Distance from 0 to 6 : 3
+   Known Distance from 1 to 7 : 3
    Known paths that distance = 3
 
    Distances[] = 0 1 1 1 2 2 3 
@@ -51,7 +51,7 @@ public class Test_Adj {
    Adjacency list of vertex 9  :  head -> 7 -> 10
    Adjacency list of vertex 10  :  head -> 8 -> 9
 
-   Known Distance from 0 to 9 : 4
+   Known Distance from 1 to 10 : 4
    Known paths that distance = 10
 
    Distances[] = 0 1 1 1 1 1 2 3 3 4

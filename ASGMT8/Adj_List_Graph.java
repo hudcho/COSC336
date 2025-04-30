@@ -81,7 +81,9 @@ public class Adj_List_Graph {
       }
 
       // Direct print Info...
-      System.out.println("\nKnown Distance from " + start + " to " + end + " : " + distance[end] + "");
+      int start1 = start+1;// FIXs print VALUES
+      int end1 = end+1;// FIXs print VALUES
+      System.out.println("\nKnown Distance from " + start1 + " to " + end1 + " : " + distance[end] + "");
       System.out.println("Known paths that distance = " + nPaths[end]);
       System.out.print("\nDistances[] = ");
       for (int k : distance) {
@@ -109,6 +111,7 @@ public class Adj_List_Graph {
          int curr = queBFS.removeFirst();
 
          for (int k : prev[curr]) {
+
             for (int f = nPaths[k]; f > 0; f--) {
                // curr is a parent on path with a previous node//
                pathsToEnd[row][distance[curr]] = curr + 1; // FIXs print VALUES
