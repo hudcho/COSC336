@@ -22,9 +22,9 @@ public class Adj_List_Graph {
 
    public void shortestPath(int start, int end) {
 
-      LinkedList<Integer> paths_insertionSorted = new LinkedList<>();
+      LinkedList<Integer> bfs_Paths = new LinkedList<>();
 
-      int[] knownDistance = new int[n];
+      int[] distance = new int[n];
       int[] nPaths = new int[n];
       Boolean[] traveled = new Boolean[n];
 
@@ -33,37 +33,39 @@ public class Adj_List_Graph {
       for (int k = 0; k < n; k++) {
          prev[k] = new LinkedList<Integer>();
          nPaths[k] = 0;
-         knownDistance[k] = (int) Integer.MAX_VALUE;
+         distance[k] = (int) Integer.MAX_VALUE;
          traveled[k] = false;
       }
 
-      knownDistance[start] = 0;
+      distance[start] = 0;
       nPaths[start] = 1;
-      paths_insertionSorted.add(start);
+      bfs_Paths.add(start);
 
       System.out.println("");
 
-      while (!paths_insertionSorted.isEmpty() && traveled[end] == false) {
+      while (!bfs_Paths.isEmpty() && traveled[end] == false) {
 
-         int currParent = paths_insertionSorted.removeFirst();
+         int currParent = bfs_Paths.removeFirst();
          traveled[currParent] = true;
          
+         //All shortest paths to curr are found...
          if (currParent != end) {
+            // iff (curr == end) Break ==> shortest path to curr is known//
 
             for (Integer c : adj.get(currParent)) {
 
-               if (knownDistance[c] == knownDistance[currParent] + 1) {
+               if (distance[c] == distance[currParent] + 1) {
                   // Node.c is a 'peer' to curr best paths//
                   nPaths[c] = nPaths[currParent] + nPaths[c];
 
                   prev[c].add(currParent);
 
-               } else if (knownDistance[c] > knownDistance[currParent] + 1) {
+               } else if (distance[c] > distance[currParent] + 1) {
                   // Node.c is a best found path or first visit//
                   nPaths[c] = nPaths[currParent];
 
-                  knownDistance[c] = knownDistance[currParent] + 1;
-                  paths_insertionSorted = insertInOrder(paths_insertionSorted, knownDistance, c);
+                  distance[c] = distance[currParent] + 1;
+                  bfs_Paths.addLast(c);
 
                   prev[c].clear();
                   prev[c].add(currParent);
@@ -76,12 +78,15 @@ public class Adj_List_Graph {
       }
 
       // Direct print Info...
-      System.out.println("\nKnown Distance from " + start + " to " + end + " : " + knownDistance[end] + "");
+      System.out.println("\nKnown Distance from " + start + " to " + end + " : " + distance[end] + "");
       System.out.println("Known paths that distance = " + nPaths[end]);
       System.out.print("\nDistances[] = ");
-      for (int k : knownDistance) {
+      for (int k : distance) {
          if (k < Integer.MAX_VALUE) {
             System.out.print(k + " ");
+         }
+         else{
+            System.out.println(" - ");
          }
 
       }
@@ -92,25 +97,37 @@ public class Adj_List_Graph {
       System.out.println("");
       // Direct print Info...
 
+
       // BFS ON PREV[] TO PRINT PATHS...
-      int[][] pathsToEnd = new int[nPaths[end]][knownDistance[end] + 1];
+      int[][] pathsToEnd = new int[nPaths[end]][distance[end] + 1];
+
       LinkedList<Integer> queBFS = new LinkedList<>();
       queBFS.add(end);
+
       int row = 0;
       while (!queBFS.isEmpty()) {
+
          int curr = queBFS.removeFirst();
+
          for (int k : prev[curr]) {
 
             for (int f = nPaths[k]; f > 0; f--) {
-               // copy curr npaths[k] times into array//
-               pathsToEnd[row][knownDistance[curr]] = curr;
+               // copy curr npaths[k] times into array bc 
+               // summ of all nPaths[ prev[curr].List ] 
+               // equals nPaths[curr]//
+               pathsToEnd[row][distance[curr]] = curr;
                row++;
             }
+
             if (row == pathsToEnd.length) {
                row = 0;
             }
+            //Works as all paths are equal distance//
+
             queBFS.addLast(k);
+
          }
+
       }
       // BFS ON PREV[] TO PRINT PATHS...
 
@@ -132,16 +149,6 @@ public class Adj_List_Graph {
          System.out.println("");
       }
 
-   }
-
-   private static LinkedList<Integer> insertInOrder(LinkedList<Integer> validPaths, int[] dist, int toNode) {
-      int index = 0;
-
-      while (index < validPaths.size() && dist[validPaths.get(index)] < dist[toNode]) {
-         index++;
-      }
-      validPaths.add(index, toNode);
-      return validPaths;
    }
 
    public void addEdge(int u, int v) {
@@ -174,8 +181,7 @@ public class Adj_List_Graph {
             System.out.print("Input File Name : ");
             userVar = scnr.next();
          }
-         scnr.close();
-         // System.out.println();
+         //scnr.close();
          Scanner scnrX = new Scanner(new File(userVar));
 
          int n = scnrX.nextInt();
@@ -193,7 +199,7 @@ public class Adj_List_Graph {
             k++;
          }
 
-         scnrX.close();
+         //scnrX.close();
          return x;
       } catch (FileNotFoundException e) {
          System.out.println("Error File Not Found...");
