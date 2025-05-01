@@ -187,6 +187,23 @@ We have seen that Dijkstra's algorithm can be implemented in two ways: Variant (
 Show that in a DAG (directed acyclic graph),  for any two nodes $u$ and $v$ such that there exists a path from $u$ to $v$, it holds that $u.f > v. f$.
 
 Hint: There are two cases to analyze. Case 1 is that $u.d < v.d$ (in words, $u$ is discovered before $v$), and Case 2 is that $v.d < u.d$ (so, $v$ is discovered before $u$). In both cases, you need to argue that $u.f > v.f$.
+\bigskip
+
+\textbf{Solution}
+
+    To prove that if there exists a path from \textit{u} to \textit{v}, then $u.f > v.f$, we must analyze two cases. 
+    
+    \textbf{Case 1: $u.d < v.d$} 
+    This means that node \textit{u} is discovered before node \textit{v} during the DFS. Since there is a path from \textit{u} to \textit{v} this means that \textit{v} is a descendant of \textit{u} and since by definition $u.f$ denotes the time when DFS has finished exploring all descendants of \textit{u}, we can say with certainty that \textit{u} will finish after \textit{v}. 
+    \newline Thus $u.f>v.f$.
+
+    \medskip
+    \textbf{Case 2: $u.d > v.d$}
+    In this case \textit{v} is discovered before \textit{u}. However since there exists an edge from \textit{u} to \textit{v} we know that there cannot be an edge $v \rightarrow u$ since this would cause a cycle. So this means that \textit{v} is discovered and finished before \textit{u} since there is no path to \textit{u}. This means that \textit{u} is discovered and finished after \textit{v}
+    \newline Thus $u.f > v.f$
+
+    \medskip
+    Therefore we have proven that whether \textit{u} is discovered before \textit{v} or \textit{v} discovered before \textit{v}, \textit{u} is always finished after \textit{v} in a DAG. And thus we have proven $u.f > v.f$.
 
 \newpage
 \textbf{Programming Task}
